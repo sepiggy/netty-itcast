@@ -32,7 +32,7 @@ public class Server {
             Iterator<SelectionKey> iter = selector.selectedKeys().iterator(); // accept, read
             while (iter.hasNext()) {
                 SelectionKey key = iter.next();
-                // 处理key 时，要从 selectedKeys 集合中删除，否则下次处理就会有问题
+                // 处理 key 时，要从 selectedKeys 集合中删除，否则下次处理就会有问题
                 iter.remove();
                 log.debug("key: {}", key);
                 // 5. 区分事件类型

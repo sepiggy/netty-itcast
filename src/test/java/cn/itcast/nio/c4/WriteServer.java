@@ -27,7 +27,7 @@ public class WriteServer {
                     sckey.interestOps(SelectionKey.OP_READ);
                     // 1. 向客户端发送大量数据
                     StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < 5000000; i++) {
+                    for (int i = 0; i < 50000000; i++) {
                         sb.append("a");
                     }
                     ByteBuffer buffer = Charset.defaultCharset().encode(sb.toString());
