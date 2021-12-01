@@ -4,6 +4,9 @@ import java.nio.ByteBuffer;
 
 import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
 
+/**
+ * 处理黏包半包问题
+ */
 public class TestByteBufferExam {
     public static void main(String[] args) {
          /*

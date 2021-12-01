@@ -5,18 +5,37 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.*;
-import java.util.ArrayList;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
 import java.util.Iterator;
-import java.util.List;
 
+import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
 import static cn.itcast.nio.c2.ByteBufferUtil.debugRead;
 
 /**
- * Selector版本Server
+ * 处理消息边界
  */
 @Slf4j
-public class Server3 {
+public class Server_04 {
+
+    private static void split(ByteBuffer source) {
+        source.flip();
+        for (int i = 0; i < source.limit(); i++) {
+            if (source.get(i) == '\n') {
+                int length = i + 1 - source.position();
+                ByteBuffer target = ByteBuffer.allocate(length);
+                for (int j = 0; j < length; j++) {
+                    target.put(source.get());
+                }
+                debugAll(target);
+            }
+        }
+        source.compact();
+    }
+
     public static void main(String[] args) throws IOException {
 
         // 1. 创建 selector, 管理多个 channel
@@ -68,8 +87,7 @@ public class Server3 {
                         if (read == -1) {  // 如果是正常断开，read的方法返回值是-1
                             key.cancel();
                         } else {
-                            buffer.flip();
-                            debugRead(buffer);
+                            split(buffer);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

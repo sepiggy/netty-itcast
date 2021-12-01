@@ -16,7 +16,7 @@ import static cn.itcast.nio.c2.ByteBufferUtil.debugRead;
  * 使用nio来理解阻塞模式, 单线程
  */
 @Slf4j
-public class Server1 {
+public class Server_01 {
     public static void main(String[] args) throws IOException {
 
         // 0. ByteBuffer
@@ -33,16 +33,16 @@ public class Server1 {
         while (true) {
             // 4. 建立与客户端的连接(accept), SocketChannel 用来与客户端通信
             log.debug("connecting...");
-            SocketChannel sc = ssc.accept(); // 阻塞方法，线程停止运行
+            SocketChannel sc = ssc.accept(); // accept 是阻塞方法，线程停止运行，等待新连接建立
             log.debug("connected... {}", sc);
             channelList.add(sc);
             for (SocketChannel socketChannel : channelList) {
                 log.debug("before read... {}", socketChannel);
-                socketChannel.read(buffer); // 阻塞方法, 线程停止运行
+                socketChannel.read(buffer); // read 是阻塞方法, 线程停止运行，等待读取内容
                 // 5. 接收客户端发送的数据
-                buffer.flip();
+                buffer.flip(); // 切换为读模式
                 debugRead(buffer);
-                buffer.clear();
+                buffer.clear(); // 切换为写模式
                 log.debug("after read... {}", socketChannel);
             }
         }

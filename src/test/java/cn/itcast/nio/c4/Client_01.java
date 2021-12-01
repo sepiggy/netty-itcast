@@ -6,7 +6,7 @@ import java.net.SocketAddress;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 
-public class Client1 {
+public class Client_01 {
     public static void main(String[] args) throws IOException {
         SocketChannel sc = SocketChannel.open();
         sc.connect(new InetSocketAddress("localhost", 8080));

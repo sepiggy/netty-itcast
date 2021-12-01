@@ -12,12 +12,13 @@ public class TestByteBuffer {
 
     public static void main(String[] args) {
         // FileChannel
+        // 通过以下两种方式可以获取 FileChannel
         // 1. 输入输出流， 2. RandomAccessFile
         try (FileChannel channel = new FileInputStream("data.txt").getChannel()) {
-            // 准备缓冲区
+            // 准备缓冲区, 通过 ByteBuffer 静态方法
             ByteBuffer buffer = ByteBuffer.allocate(10);
             while(true) {
-                // 从 channel 读取数据，向 buffer 写入
+                // 从 channel 读取数据，向 buffer 写入 !
                 int len = channel.read(buffer);
                 log.debug("读取到的字节数 {}", len);
                 if(len == -1) { // 没有内容了

@@ -17,7 +17,7 @@ import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
  * 附件与扩容
  */
 @Slf4j
-public class Server5 {
+public class Server_05 {
 
     private static void split(ByteBuffer source) {
         source.flip();
