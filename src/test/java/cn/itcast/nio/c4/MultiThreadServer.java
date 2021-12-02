@@ -5,15 +5,24 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.*;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
 
+/**
+ * "多线程 + 多Selector"版Server
+ * Boss (1个Thread + 1个Selector + 1个ServerSocketChannel) 负责处理 Accept 事件
+ * Worker (1个Thread + 1个Selector + 多个SocketChannel) 负责处理 Read 和 Write 事件
+ */
 @Slf4j
 public class MultiThreadServer {
+
     public static void main(String[] args) throws IOException {
         Thread.currentThread().setName("boss");
         ServerSocketChannel ssc = ServerSocketChannel.open();
@@ -22,13 +31,13 @@ public class MultiThreadServer {
         SelectionKey bossKey = ssc.register(boss, 0, null);
         bossKey.interestOps(SelectionKey.OP_ACCEPT);
         ssc.bind(new InetSocketAddress(8080));
-        // 1. 创建固定数量的 worker 并初始化
+        // 1. 创建"固定"数量的 worker 并初始化
         Worker[] workers = new Worker[Runtime.getRuntime().availableProcessors()];
         for (int i = 0; i < workers.length; i++) {
             workers[i] = new Worker("worker-" + i);
         }
         AtomicInteger index = new AtomicInteger();
-        while(true) {
+        while (true) {
             boss.select();
             Iterator<SelectionKey> iter = boss.selectedKeys().iterator();
             while (iter.hasNext()) {
@@ -47,21 +56,24 @@ public class MultiThreadServer {
             }
         }
     }
-    static class Worker implements Runnable{
+
+    static class Worker implements Runnable {
+
         private Thread thread;
         private Selector selector;
         private String name;
         private volatile boolean start = false; // 还未初始化
         private ConcurrentLinkedQueue<Runnable> queue = new ConcurrentLinkedQueue<>();
+
         public Worker(String name) {
             this.name = name;
         }
 
-        // 初始化线程，和 selector
+        // 初始化 thread 和 selector
         public void register(SocketChannel sc) throws IOException {
-            if(!start) {
+            if (!start) { // 保证一个 Worker 对应一个 Thread 和一个 Selector
                 selector = Selector.open();
-                thread = new Thread(this, name);
+                thread = new Thread(this, name); // 当前 worker 对象就是执行单元
                 thread.start();
                 start = true;
             }
@@ -71,7 +83,7 @@ public class MultiThreadServer {
 
         @Override
         public void run() {
-            while(true) {
+            while (true) {
                 try {
                     selector.select(); // worker-0  阻塞
                     Iterator<SelectionKey> iter = selector.selectedKeys().iterator();
@@ -92,5 +104,7 @@ public class MultiThreadServer {
                 }
             }
         }
+
     }
+
 }
