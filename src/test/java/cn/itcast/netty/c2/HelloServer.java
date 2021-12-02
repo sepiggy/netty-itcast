@@ -12,7 +12,7 @@ import io.netty.handler.logging.LoggingHandler;
 
 public class HelloServer {
     public static void main(String[] args) {
-        // 1. 启动器，负责组装 netty 组件，启动服务器
+        // 1. 服务端启动器，负责组装 netty 组件，启动服务器
         new ServerBootstrap()
             // 2. BossEventLoop, WorkerEventLoop(selector,thread), group 组
             .group(new NioEventLoopGroup())
