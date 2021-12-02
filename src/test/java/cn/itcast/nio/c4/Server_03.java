@@ -19,10 +19,12 @@ import static cn.itcast.nio.c2.ByteBufferUtil.debugRead;
  */
 @Slf4j
 public class Server_03 {
+
     public static void main(String[] args) throws IOException {
 
         // 1. 创建 selector, 管理多个 channel, 需要将 channel 注册到 selector 上
         Selector selector = Selector.open();
+        System.out.println("selector.getClass() = " + selector.getClass());
         ServerSocketChannel ssc = ServerSocketChannel.open();
         ssc.configureBlocking(false);
         // 2. 建立 selector 和 channel 的联系 (注册)
@@ -48,7 +50,7 @@ public class Server_03 {
             Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
             while (iterator.hasNext()) {
                 SelectionKey key = iterator.next();
-                // 处理完一个key一定要从迭代器中删除
+                // ATTN 处理完一个 key 一定要从 selectedKeys 集合中删除，否则下次处理就会报 NPE
                 iterator.remove();
                 log.debug("key: {}", key);
                 // 5. 区分事件类型
@@ -63,12 +65,12 @@ public class Server_03 {
                     scKey.interestOps(SelectionKey.OP_READ);
                     log.debug("{}", sc);
                     log.debug("scKey: {}", scKey);
-                } else if (key.isReadable()) { // 处理 SocketChannel 读事件
+                } else if (key.isReadable()) { // ATTN 处理 SocketChannel 读事件 (包括正常读事件和客户端关闭事件(包括正常断开和异常断开))
                     try {
                         SocketChannel channel = (SocketChannel) key.channel(); // 拿到触发事件的 channel
                         ByteBuffer buffer = ByteBuffer.allocate(16);
                         int read = channel.read(buffer);
-                        if (read == -1) {  // 如果是正常断开，read的方法返回值是-1
+                        if (read == -1) {  // ATTN 如果是正常断开，read 的方法返回值是-1
                             key.cancel();
                         } else {
                             buffer.flip();
@@ -76,11 +78,12 @@ public class Server_03 {
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
-                        key.cancel(); // 如果是异常断开，因为客户端断开了，因此需要反注册
+                        key.cancel(); // 如果是异常断开，因为客户端断开了，因此需要反注册，将其从 selectedKeys 集合中删除
                     }
                 }
 //                key.cancel();
             }
         }
     }
+
 }

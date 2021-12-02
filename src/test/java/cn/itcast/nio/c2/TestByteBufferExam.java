@@ -5,7 +5,8 @@ import java.nio.ByteBuffer;
 import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
 
 /**
- * 处理黏包半包问题
+ * 使用分隔符的方式处理处理黏包半包问题
+ * 缺点：效率低
  */
 public class TestByteBufferExam {
     public static void main(String[] args) {
@@ -42,6 +43,6 @@ public class TestByteBufferExam {
                 debugAll(target);
             }
         }
-        source.compact();
+        source.compact(); // ATTN
     }
 }

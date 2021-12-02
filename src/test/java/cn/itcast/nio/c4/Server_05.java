@@ -14,7 +14,7 @@ import java.util.Iterator;
 import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
 
 /**
- * 附件与扩容
+ * 附件与扩容 (p34)
  */
 @Slf4j
 public class Server_05 {
@@ -36,72 +36,52 @@ public class Server_05 {
 
     public static void main(String[] args) throws IOException {
 
-        // 1. 创建 selector, 管理多个 channel
         Selector selector = Selector.open();
         ServerSocketChannel ssc = ServerSocketChannel.open();
         ssc.configureBlocking(false);
-        // 2. 建立 selector 和 channel 的联系 (注册)
-        // 通过 SelectionKey 可以知道将来哪个 Channel 发生哪个事件
-        // 四种事件类型：
-        // accept - 会在有连接请求时触发
-        // connect - 客户端连接建立后触发
-        // read - 可读事件
-        // write - 可写事件
         SelectionKey sscKey = ssc.register(selector, 0, null);
-        // sscKey 只关注 accpet 事件
         sscKey.interestOps(SelectionKey.OP_ACCEPT);
         log.debug("sscKey: {}", sscKey);
         ssc.bind(new InetSocketAddress(8080));
         while (true) {
-            // 3. select 方法
-            // 没有事件发生，线程阻塞；有事件，线程才会恢复运行
-            // select 在事件未处理时，它不会阻塞
-            // 事件发生后要么处理，要么取消，不能置之不理; 否则陷入死循环
             selector.select();
-            // 4. 处理事件, selectedKeys 的返回值包含了所有发生的事件
             Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
             while (iterator.hasNext()) {
                 SelectionKey key = iterator.next();
-                // 处理完一个key一定要从迭代器中删除
                 iterator.remove();
                 log.debug("key: {}", key);
-                // 5. 区分事件类型
-                // 无论是正常断开还是异常断开，都会触发一次读事件
-                // 所以针对这两种情况都要分别做处理，否则服务端会因为
-                // 你没有处理这次读事件不停地陷入死循环
                 if (key.isAcceptable()) {
                     ServerSocketChannel channel = (ServerSocketChannel) key.channel();
                     SocketChannel sc = channel.accept();
                     sc.configureBlocking(false);
                     ByteBuffer buffer = ByteBuffer.allocate(16); // attachment
-                    // 将一个 byteBuffer 作为附件关联到 selectionKey 上
+                    // ATTN 将一个 ByteBuffer 作为附件关联到 selectionKey 上
+                    // ATTN 以保证每个 SocketChannel 对应唯一的 ByteBuffer
                     SelectionKey scKey = sc.register(selector, 0, buffer);
                     scKey.interestOps(SelectionKey.OP_READ);
                     log.debug("{}", sc);
                     log.debug("scKey: {}", scKey);
                 } else if (key.isReadable()) {
                     try {
-                        SocketChannel channel = (SocketChannel) key.channel(); // 拿到触发事件的 channel
-                        // 获取 selectonKey 上关联的附件
-                        ByteBuffer buffer = (ByteBuffer) key.attachment();
+                        SocketChannel channel = (SocketChannel) key.channel();
+                        ByteBuffer buffer = (ByteBuffer) key.attachment(); // 获取 selectionKey 上关联的 ByteBuffer（附件）
                         int read = channel.read(buffer);
-                        if (read == -1) {  // 如果是正常断开，read的方法返回值是-1
+                        if (read == -1) {
                             key.cancel();
                         } else {
                             split(buffer);
-                            if (buffer.position() == buffer.limit()) {
-                                ByteBuffer newBuffer = ByteBuffer.allocate(buffer.capacity() * 2);
-                                buffer.flip();
+                            if (buffer.position() == buffer.limit()) { // 说明在一次 split 操作中没有找到一条完整的消息
+                                ByteBuffer newBuffer = ByteBuffer.allocate(buffer.capacity() * 2); // 扩容翻倍
+                                buffer.flip(); // 切换为读模式
                                 newBuffer.put(buffer); // 0123456789abcdef
-                                key.attach(newBuffer);
+                                key.attach(newBuffer); // attach 方法可以关联新的附件
                             }
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
-                        key.cancel(); // 如果是异常断开，因为客户端断开了，因此需要反注册
+                        key.cancel();
                     }
                 }
-//                key.cancel();
             }
         }
     }

@@ -15,7 +15,7 @@ public class WriteClient {
         while (true) {
             ByteBuffer buffer = ByteBuffer.allocate(1024 * 1024);
             count += sc.read(buffer);
-            System.out.println(count);
+            System.out.println("count = " + count);
             buffer.clear();
         }
     }
