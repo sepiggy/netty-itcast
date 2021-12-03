@@ -8,13 +8,16 @@ import io.netty.handler.codec.string.StringEncoder;
 
 import java.net.InetSocketAddress;
 
+/**
+ * Netty客户端类
+ */
 public class HelloClient {
     public static void main(String[] args) throws InterruptedException {
-        // 1. 启动类
+        // 1. Bootstrap: 客户端启动器
         new Bootstrap()
             // 2. 添加 EventLoop
             .group(new NioEventLoopGroup())
-            // 3. 选择客户端 channel 实现
+            // 3. 选择客户端的 SocketChannel 实现 (对原生的 SocketChannel 进行封装)
             .channel(NioSocketChannel.class)
             // 4. 添加处理器
             .handler(new ChannelInitializer<NioSocketChannel>() {
@@ -25,9 +28,9 @@ public class HelloClient {
             })
             // 5. 连接到服务器
             .connect(new InetSocketAddress("localhost", 8080))
-            .sync()
-            .channel()
+            .sync() // 阻塞方法，直到连接建立
+            .channel() // 代表连接对象 SocketChannel
             // 6. 向服务器发送数据
-            .writeAndFlush("hello, world");
+            .writeAndFlush("hello, world"); // 发送数据
     }
 }
