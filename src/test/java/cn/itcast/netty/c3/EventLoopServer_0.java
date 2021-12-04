@@ -25,7 +25,7 @@ public class EventLoopServer_0 {
                         ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
                             @Override
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                                // 这里的 Object 应该是 ByteBuf 类型
+                                // 这里的 Object 是 ByteBuf 类型
                                 ByteBuf buf = (ByteBuf) msg;
                                 log.debug(buf.toString(StandardCharsets.UTF_8));
                             }

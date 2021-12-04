@@ -15,6 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.Charset;
 
+/**
+ * 使用 EmbeddedChannel 可以对 Channel 进行调试
+ */
 @Slf4j
 public class TestEmbeddedChannel {
     public static void main(String[] args) {
