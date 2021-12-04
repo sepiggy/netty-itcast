@@ -6,10 +6,17 @@ import io.netty.buffer.ByteBufAllocator;
 import static io.netty.buffer.ByteBufUtil.appendPrettyHexDump;
 import static io.netty.util.internal.StringUtil.NEWLINE;
 
+/**
+ * ByteBuf 是对 NIO 中 ByteBuffer 的增强
+ * ByteBuf 的容量可以动态扩容
+ */
 public class TestByteBuf {
     public static void main(String[] args) {
 
         ByteBuf buf = ByteBufAllocator.DEFAULT.buffer();
+//        ByteBuf buf = ByteBufAllocator.DEFAULT.heapBuffer();
+        // 4.1 之后 Netty 默认开启池化内存
+        // class io.netty.buffer.PooledUnsafeDirectByteBuf
         System.out.println(buf.getClass());
         System.out.println(buf.maxCapacity());
         log(buf);
