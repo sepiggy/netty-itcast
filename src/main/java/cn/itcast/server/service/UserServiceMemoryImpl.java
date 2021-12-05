@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class UserServiceMemoryImpl implements UserService {
+
     private Map<String, String> allUserMap = new ConcurrentHashMap<>();
 
     {
@@ -22,4 +23,5 @@ public class UserServiceMemoryImpl implements UserService {
         }
         return pass.equals(password);
     }
+
 }
