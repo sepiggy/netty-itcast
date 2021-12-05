@@ -8,14 +8,16 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 演示通过 ”行解码器“ 的方案解决粘包、半包问题
+ */
 @Slf4j
-public class Server3 {
+public class Server_行解码器 {
     void start() {
         NioEventLoopGroup boss = new NioEventLoopGroup();
         NioEventLoopGroup worker = new NioEventLoopGroup();
@@ -30,7 +32,7 @@ public class Server3 {
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
+                    ch.pipeline().addLast(new LineBasedFrameDecoder(1024)); // 行解码器
                     ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
                 }
             });
@@ -45,6 +47,6 @@ public class Server3 {
     }
 
     public static void main(String[] args) {
-        new Server3().start();
+        new Server_行解码器().start();
     }
 }

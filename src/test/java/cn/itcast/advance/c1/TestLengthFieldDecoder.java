@@ -7,11 +7,15 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
+/**
+ * 使用 EmbeddedChannel 来测试 LTC 解码器
+ */
 public class TestLengthFieldDecoder {
+
     public static void main(String[] args) {
         EmbeddedChannel channel = new EmbeddedChannel(
                 new LengthFieldBasedFrameDecoder(
-                        1024, 0, 4, 1,4),
+                        1024, 0, 4, 1, 4),
                 new LoggingHandler(LogLevel.DEBUG)
         );
 
@@ -29,5 +33,6 @@ public class TestLengthFieldDecoder {
         buffer.writeByte(1);
         buffer.writeBytes(bytes);
     }
+
 }
 

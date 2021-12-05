@@ -12,16 +12,28 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Client1 {
-    static final Logger log = LoggerFactory.getLogger(Client1.class);
+/**
+ * 通过"短连接"方案解决粘包问题
+ * 以连接建立和连接断开作为消息边界
+ * ATTN 短连接发送完数据就断开，发送完数据就断开，是不会造成粘包现象的
+ * ATTN 缺点：
+ * 1. 效率低
+ * 2. 短连接并不能解决半包问题
+ */
+public class Client_短连接 {
+
+    static final Logger log = LoggerFactory.getLogger(Client_短连接.class);
 
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
-            send();
+            send(); // 通过多次调用 send 方法来实现发送多条数据
         }
         System.out.println("finish");
     }
 
+    /**
+     * 短连接发送：客户端发送完数据就断开
+     */
     private static void send() {
         NioEventLoopGroup worker = new NioEventLoopGroup();
         try {
@@ -36,9 +48,13 @@ public class Client1 {
                         @Override
                         public void channelActive(ChannelHandlerContext ctx) {
                             ByteBuf buf = ctx.alloc().buffer(16);
+                            // 用来演示粘包
+//                            buf.writeBytes(new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
+
+                            // 用来演示半包
                             buf.writeBytes(new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17});
                             ctx.writeAndFlush(buf);
-                            ctx.channel().close();
+                            ctx.channel().close(); // 客户端发送完消息就断开
                         }
                     });
                 }
@@ -51,4 +67,5 @@ public class Client1 {
             worker.shutdownGracefully();
         }
     }
+
 }

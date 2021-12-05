@@ -14,9 +14,16 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 
 @Slf4j
-@ChannelHandler.Sharable
+//@ChannelHandler.Sharable
 public class MessageCodec extends ByteToMessageCodec<Message> {
 
+    /**
+     * 编码
+     * @param ctx
+     * @param msg
+     * @param out
+     * @throws Exception
+     */
     @Override
     public void encode(ChannelHandlerContext ctx, Message msg, ByteBuf out) throws Exception {
         // 1. 4 字节的魔数
@@ -27,7 +34,7 @@ public class MessageCodec extends ByteToMessageCodec<Message> {
         out.writeByte(0);
         // 4. 1 字节的指令类型
         out.writeByte(msg.getMessageType());
-        // 5. 4 个字节
+        // 5. 4 个字节的请求序号
         out.writeInt(msg.getSequenceId());
         // 无意义，对齐填充
         out.writeByte(0xff);
@@ -36,12 +43,19 @@ public class MessageCodec extends ByteToMessageCodec<Message> {
         ObjectOutputStream oos = new ObjectOutputStream(bos);
         oos.writeObject(msg);
         byte[] bytes = bos.toByteArray();
-        // 7. 长度
+        // 7. 4 个字节长度
         out.writeInt(bytes.length);
         // 8. 写入内容
         out.writeBytes(bytes);
     }
 
+    /**
+     * 解码
+     * @param ctx
+     * @param in
+     * @param out
+     * @throws Exception
+     */
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         int magicNum = in.readInt();
@@ -49,14 +63,14 @@ public class MessageCodec extends ByteToMessageCodec<Message> {
         byte serializerType = in.readByte();
         byte messageType = in.readByte();
         int sequenceId = in.readInt();
-        in.readByte();
+        in.readByte(); // 跳过padding
         int length = in.readInt();
         byte[] bytes = new byte[length];
-        in.readBytes(bytes, 0, length);
+        in.readBytes(bytes, 0, length); // 读入实际内容数组
         ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
-        Message message = (Message) ois.readObject();
+        Message message = (Message) ois.readObject(); // 反序列化
         log.debug("{}, {}, {}, {}, {}, {}", magicNum, version, serializerType, messageType, sequenceId, length);
         log.debug("{}", message);
-        out.add(message);
+        out.add(message); // 解析一条消息之后要装入 out 这个 List 以便给下一个 Handler 使用
     }
 }

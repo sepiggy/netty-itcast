@@ -14,7 +14,8 @@ import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Server2 {
+public class Server_定长解码器 {
+
     void start() {
         NioEventLoopGroup boss = new NioEventLoopGroup();
         NioEventLoopGroup worker = new NioEventLoopGroup();
@@ -29,6 +30,7 @@ public class Server2 {
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
+                    // 定长解码器，与客户端约定发送的最长消息的长度，以此为准
                     ch.pipeline().addLast(new FixedLengthFrameDecoder(10));
                     ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
                 }
@@ -44,6 +46,7 @@ public class Server2 {
     }
 
     public static void main(String[] args) {
-        new Server2().start();
+        new Server_定长解码器().start();
     }
+
 }

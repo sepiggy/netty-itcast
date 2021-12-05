@@ -14,9 +14,14 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.Charset;
 
+/**
+ * 使用 Netty 实现 Redis 客户端
+ */
 @Slf4j
 public class TestRedis {
+
     /*
+    Redis 协议格式
     set name zhangsan
     *3
     $3
@@ -74,4 +79,5 @@ public class TestRedis {
             worker.shutdownGracefully();
         }
     }
+
 }

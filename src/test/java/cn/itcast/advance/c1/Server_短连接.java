@@ -12,8 +12,14 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 通过短连接的方式解决粘包、半包
+ * TCP 层: 通过  serverBootstrap.option(ChannelOption.SO_RCVBUF, size) 来调整 TCP 滑动窗口大小
+ * Netty 层： 默认 ByteBuf 大小是 1024B, 这里不做调整
+ */
 @Slf4j
-public class Server1 {
+public class Server_短连接 {
+
     void start() {
         NioEventLoopGroup boss = new NioEventLoopGroup();
         NioEventLoopGroup worker = new NioEventLoopGroup();
@@ -42,6 +48,7 @@ public class Server1 {
     }
 
     public static void main(String[] args) {
-        new Server1().start();
+        new Server_短连接().start();
     }
+
 }
