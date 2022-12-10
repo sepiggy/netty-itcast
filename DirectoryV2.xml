@@ -12,4 +12,10 @@
            extension="java"/>
      <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferRead.java" title="p010-ByteBuffer与读取相关的方法"
            extension="java"/>
- </trees>
+    <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferString.java" title="p011-ByteBuffer与字符串之间的相互转换"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c2/TestGatheringWrites.java" title="p012-分散读集中写思想" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c2/TestScatteringReads.java" title="p012-分散读集中写思想" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferExam.java" title="p013-p014-ByteBuffer综合练习"
+          extension="java"/>
+</trees>

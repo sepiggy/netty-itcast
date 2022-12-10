@@ -20,26 +20,33 @@ public class TestByteBufferRead {
         // 切换到读模式
         buffer.flip(); // position:0, limit:4, capacity:10
         debugAll(buffer);
-//
-//        buffer.get(new byte[4]);
-//        debugAll(buffer);
-//        buffer.rewind(); // rewind 从头开始读
-//        System.out.println((char) buffer.get());
+
+        // 从buffer中读取数据到byte数组中
+        buffer.get(new byte[4]); // position:4, limit:4, capacity:10
+        debugAll(buffer);
+
+        // rewind从头开始读
+        buffer.rewind(); // position:0, limit:4, capacity:10
+        debugAll(buffer);
+
+        System.out.println((char) buffer.get()); // position:1, limit:4, capacity:10
+        debugAll(buffer);
 
         // mark & reset (rewind 增强)
-        // mark 做一个标记，记录 position 位置， reset 是将 position 重置到 mark 的位置
-//        System.out.println((char) buffer.get());
-//        System.out.println((char) buffer.get());
-//        buffer.mark(); // 加标记，索引2 的位置
-//        System.out.println((char) buffer.get());
-//        System.out.println((char) buffer.get());
-//        buffer.reset(); // 将 position 重置到索引 2 (mark 之前标记的位置)
-//        System.out.println((char) buffer.get());
-//        System.out.println((char) buffer.get());
-//
-        // get(i) 不会改变读索引的位置
-//        System.out.println((char) buffer.get(3));
-//        debugAll(buffer);
+        // mark: 做一个标记，记录position位置
+        // reset: 是将position重置到mark的位置
+        System.out.println((char) buffer.get());     // position:2, limit:4, capacity:10
+        buffer.mark();                               // position:2, limit:4, capacity:10, mark:2
+        System.out.println((char) buffer.get());     // position:3, limit:4, capacity:10, mark:2
+        debugAll(buffer);
+        buffer.reset();                              // position:2, limit:4, capacity:10, mark:2
+        debugAll(buffer);
+        System.out.println((char) buffer.get());     // position:3, limit:4, capacity:10, mark:2
+        debugAll(buffer);
+
+        // get(i)不会改变position指针的位置
+        System.out.println((char) buffer.get(0));    // position:3, limit:4, capacity:10, mark:2
+        debugAll(buffer);
     }
 
 }
