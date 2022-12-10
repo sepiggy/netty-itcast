@@ -4,13 +4,23 @@ import java.nio.ByteBuffer;
 
 import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
 
+/**
+ * ByteBuffer与读取相关的方法
+ */
 public class TestByteBufferRead {
 
     public static void main(String[] args) {
-        ByteBuffer buffer = ByteBuffer.allocate(10);
-        buffer.put(new byte[]{'a', 'b', 'c', 'd'});
-        buffer.flip();
 
+        ByteBuffer buffer = ByteBuffer.allocate(10); // position:0, limit:10, capacity:10
+        debugAll(buffer);
+
+        buffer.put(new byte[]{'a', 'b', 'c', 'd'}); // position:4, limit:10, capacity:10
+        debugAll(buffer);
+
+        // 切换到读模式
+        buffer.flip(); // position:0, limit:4, capacity:10
+        debugAll(buffer);
+//
 //        buffer.get(new byte[4]);
 //        debugAll(buffer);
 //        buffer.rewind(); // rewind 从头开始读
@@ -28,8 +38,8 @@ public class TestByteBufferRead {
 //        System.out.println((char) buffer.get());
 //
         // get(i) 不会改变读索引的位置
-        System.out.println((char) buffer.get(3));
-        debugAll(buffer);
+//        System.out.println((char) buffer.get(3));
+//        debugAll(buffer);
     }
 
 }

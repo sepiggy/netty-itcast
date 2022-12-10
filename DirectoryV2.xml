@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+ <trees>
+     <tree path="/src/test/java/cn/itcast/nio/c2" title="ByteBuffer详解"/>
+     <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBuffer.java" title="p006-ByteBuffer和FileChannel的基本使用-读取文件"
+           extension="java"/>
+     <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBuffer_01.java" title="p006-ByteBuffer和FileChannel的基本使用-读取文件（优化版）"
+           extension="java"/>
+     <tree path="/src/test/java/cn/itcast/nio/c2/ByteBufferUtil.java" title="p008-ByteBuffer调试工具类" extension="java"/>
+     <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferReadWrite.java" title="p008-ByteBuffer读写模式切换"
+           extension="java"/>
+     <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferAllocate.java" title="p009-ByteBuffer分配的两种方式比较"
+           extension="java"/>
+     <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferRead.java" title="p010-ByteBuffer与读取相关的方法"
+           extension="java"/>
+ </trees>
