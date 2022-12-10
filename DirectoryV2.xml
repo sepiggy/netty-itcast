@@ -18,4 +18,7 @@
     <tree path="/src/test/java/cn/itcast/nio/c2/TestScatteringReads.java" title="p012-分散读集中写思想" extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferExam.java" title="p013-p014-ByteBuffer综合练习"
           extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c3" title="FileChannel详解"/>
+    <tree path="/src/test/java/cn/itcast/nio/c3/TestFileChannelTransferTo.java" title="P016-两个Channel传输数据"
+          extension="java"/>
 </trees>
