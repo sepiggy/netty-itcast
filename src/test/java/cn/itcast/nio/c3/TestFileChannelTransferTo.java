@@ -22,7 +22,8 @@ public class TestFileChannelTransferTo {
             // left变量代表还剩余多少字节
             for (long left = size; left > 0; ) {
                 System.out.println("position:" + (size - left) + ", left:" + left);
-                // 效率高，底层会利用操作系统的零拷贝进行优化,
+                // 效率高，底层会利用操作系统的零拷贝进行优化
+                // 方法名中带“transfer”的方法一般底层使用了“零拷贝”技术
                 // 坑: 每次最多传输2g数据! (采用多次传输的方法可以解决上述问题)
                 left -= from.transferTo((size - left), left, to);
             }

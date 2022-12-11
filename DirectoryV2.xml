@@ -21,4 +21,6 @@
     <tree path="/src/test/java/cn/itcast/nio/c3" title="FileChannel详解"/>
     <tree path="/src/test/java/cn/itcast/nio/c3/TestFileChannelTransferTo.java" title="P016-两个Channel传输数据"
           extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c3/TestFilesCopy.java" title="p021-拷贝多级目录" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c3/TestFilesWalkFileTree.java" title="p019-遍历文件树-p020-删除多级目录" extension="java"/>
 </trees>
