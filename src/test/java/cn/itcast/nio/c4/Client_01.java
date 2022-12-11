@@ -6,8 +6,13 @@ import java.net.SocketAddress;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 
+/**
+ * NIO演示客户端
+ */
 public class Client_01 {
+
     public static void main(String[] args) throws IOException {
+
         SocketChannel sc = SocketChannel.open();
         sc.connect(new InetSocketAddress("localhost", 8080));
         SocketAddress address = sc.getLocalAddress();
@@ -16,4 +21,5 @@ public class Client_01 {
         sc.write(Charset.defaultCharset().encode("0123456789abcdef3333\n"));
         System.in.read();
     }
+
 }

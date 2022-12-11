@@ -18,9 +18,13 @@
     <tree path="/src/test/java/cn/itcast/nio/c2/TestScatteringReads.java" title="p012-分散读集中写思想" extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferExam.java" title="p013-p014-ByteBuffer综合练习"
           extension="java"/>
-    <tree path="/src/test/java/cn/itcast/nio/c3" title="FileChannel详解"/>
+    <tree path="/src/test/java/cn/itcast/nio/c3" title="文件编程"/>
     <tree path="/src/test/java/cn/itcast/nio/c3/TestFileChannelTransferTo.java" title="P016-两个Channel传输数据"
           extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c3/TestFilesCopy.java" title="p021-拷贝多级目录" extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c3/TestFilesWalkFileTree.java" title="p019-遍历文件树-p020-删除多级目录" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c4" title="网络编程"/>
+    <tree path="/src/test/java/cn/itcast/nio/c4/Server_01.java" title="p022-使用NIO+单线程来理解阻塞模式（accept，read）" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c4/Client_01.java" title="p023-客户端" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c4/Client.java" title="p023-客户端" extension="java"/>
 </trees>
