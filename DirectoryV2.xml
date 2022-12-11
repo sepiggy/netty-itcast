@@ -27,4 +27,5 @@
     <tree path="/src/test/java/cn/itcast/nio/c4/Server_01.java" title="p022-使用NIO+单线程来理解阻塞模式（accept，read）" extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c4/Client_01.java" title="p023-客户端" extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c4/Client.java" title="p023-客户端" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c4/Server_02.java" title="p025-使用NIO+单线程来理解非阻塞模式（accept，read）" extension="java"/>
 </trees>

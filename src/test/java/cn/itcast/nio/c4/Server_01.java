@@ -13,11 +13,13 @@ import java.util.List;
 import static cn.itcast.nio.c2.ByteBufferUtil.debugRead;
 
 /**
- * 使用NIO+单线程来理解阻塞模式 (服务端)
+ * 使用"NIO+单线程"来理解阻塞模式 (服务端)
  * <p></p>
  * 使用Run模式运行服务端
  * <p></p>
- * 阻塞模式下，accept和read方法都是阻塞方法，且在单线程环境下，多个阻塞方法会互相影响
+ * 阻塞模式下，accept方法和read方法都是阻塞方法，且在单线程环境下，多个阻塞方法会相互影响
+ * <p></p>
+ * 结论：使用“NIO+单线程+阻塞模式”不可以处理多个客户端的连接和读写，相互之间会有影响
  */
 @Slf4j
 public class Server_01 {
@@ -51,7 +53,7 @@ public class Server_01 {
             for (SocketChannel socketChannel : channelList) {
                 log.debug("before read... {}", socketChannel);
                 // 从SocketChannel读取数据写入缓冲区
-                socketChannel.read(buffer); // read是阻塞方法, 线程停止运行，等待读取内容 (测试Linux系统下read方法貌似不阻塞不知为何)
+                socketChannel.read(buffer); // read是阻塞方法, 线程停止运行，等待读取内容
                 // 5. 接收客户端发送的数据
                 buffer.flip(); // 切换为读模式
                 debugRead(buffer);

@@ -13,10 +13,23 @@ import java.util.List;
 import static cn.itcast.nio.c2.ByteBufferUtil.debugRead;
 
 /**
- * 使用nio来理解非阻塞模式
+ * 使用"NIO+单线程"来理解非阻塞模式
+ * <P></P>
+ * 使用run模式运行服务端
+ * <p></p>
+ * 在连接建立后和有数据时才进行日志输出，防止刷屏
+ * <p></p>
+ * 非阻塞模式下，accept方法和read方法都是非阻塞方法，在单线程环境下，各个非阻塞方法之间不会相互影响
+ * <p></p>
+ * 结论：
+ * <p></p>
+ * 1. 使用“NIO+单线程+非阻塞模式”可以处理多个客户端的连接和读写，相互之间互不影响
+ * <p></p>
+ * 2. 但是当没有连接和读写发生的时候，这个单线程会一直忙等
  */
 @Slf4j
 public class Server_02 {
+
     public static void main(String[] args) throws IOException {
 
         // 0. ByteBuffer
@@ -24,7 +37,8 @@ public class Server_02 {
 
         // 1. 创建了服务器
         ServerSocketChannel ssc = ServerSocketChannel.open();
-        ssc.configureBlocking(false); // 设置 ServerSocketChannel 为非阻塞模式, 对应的 accept 方法不是阻塞方法
+        // 设置ServerSocketChannel为非阻塞模式，影响的是accept方法，其变为非阻塞方法
+        ssc.configureBlocking(false);
 
         // 2. 绑定监听端口
         ssc.bind(new InetSocketAddress(8080));
@@ -32,17 +46,24 @@ public class Server_02 {
         // 3. 连接集合
         List<SocketChannel> channelList = new ArrayList<>();
         while (true) {
-            // 4. 建立与客户端的连接(accept), SocketChannel 用来与客户端通信
-            SocketChannel sc = ssc.accept(); // 此时 accept 方法不是阻塞方法，线程会继续运行，如果没有建立连接，sc 为 null
+            // 4. 建立与客户端的连接(accept), SocketChannel用来与客户端通信
+//            log.debug("connecting...");
+            // 此时accept方法不再是阻塞方法，线程还会继续运行不会停止，如果没有连接建立，accept方法返回null
+            SocketChannel sc = ssc.accept();
+//            log.debug("connected... {}", sc);
             if (sc != null) {
                 log.debug("connected... {}", sc);
-                sc.configureBlocking(false); // 设置 SocketChannel 为非阻塞模式，对应的 read 方法不是阻塞方法
+                // 设置SocketChannel为非阻塞模式，影响的是read方法，其变为非阻塞方法
+                sc.configureBlocking(false);
                 channelList.add(sc);
             }
             for (SocketChannel socketChannel : channelList) {
-                int read = socketChannel.read(buffer); // 此时 read 方法不是阻塞方法, 线程会继续运行, 如果没有读到数据, read 方法返回 0
+                // 此时read方法不再是阻塞方法, 线程还会继续运行不会停止, 如果没有读到数据, read方法返回0
+                int read = socketChannel.read(buffer);
+//                System.out.println("read = " + read);
                 if (read > 0) {
                     // 5. 接收客户端发送的数据
+                    System.out.println("read = " + read);
                     buffer.flip();
                     debugRead(buffer);
                     buffer.clear();
@@ -51,4 +72,5 @@ public class Server_02 {
             }
         }
     }
+
 }
