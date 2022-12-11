@@ -25,7 +25,7 @@ import static cn.itcast.nio.c2.ByteBufferUtil.debugRead;
  * <p></p>
  * 1. 使用“NIO+单线程+非阻塞模式”可以处理多个客户端的连接和读写，相互之间互不影响
  * <p></p>
- * 2. 但是当没有连接和读写发生的时候，这个单线程会一直忙等
+ * 2. 但是当没有连接和读写发生的时候，这个单线程会一直忙等空转，造成CPU资源浪费
  */
 @Slf4j
 public class Server_02 {
