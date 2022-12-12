@@ -15,6 +15,8 @@ import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
 /**
  * 使用“NIO+非阻塞+多路复用(Selector)+多线程"提高Server端运行效率
  * <br>
+ * 使用run模式运行服务端
+ * <br>
  * 要点：
  * <br>
  * 1) 在 {@link Server_05} 的基础上，一个Selector负责所有的accept、read、write事件拆分为：
@@ -51,7 +53,7 @@ public class Server_06 {
         for (int i = 0; i < workers.length; i++) {
             workers[i] = new Worker("worker-" + i);
         }
-        AtomicInteger index = new AtomicInteger();
+        AtomicInteger index = new AtomicInteger(); // 计数器，用于轮询
         while (true) {
             boss.select();
             Iterator<SelectionKey> iter = boss.selectedKeys().iterator();
@@ -65,7 +67,10 @@ public class Server_06 {
                     // 2. SocketChannel关联Worker中的Selector
                     log.debug("before register...{}", sc.getRemoteAddress());
                     // "round robin"轮询
-                    workers[index.getAndIncrement() % workers.length].register(sc);
+                    int indexCopy = index.intValue();
+                    workers[indexCopy % workers.length].register(sc);
+                    log.debug("分配给workers[{}]处理read事件", indexCopy % workers.length);
+                    index.getAndIncrement();
                     log.debug("after register...{}", sc.getRemoteAddress());
                 }
             }
@@ -86,7 +91,7 @@ public class Server_06 {
 
         // 初始化Thread和Selector
         public void register(SocketChannel sc) throws IOException {
-            if (!start) { // 保证一个Worker对应一个Thread和一个Selector，这段if守卫的代码只执行一次
+            if (!start) { // 这段if守卫的代码只执行一次，保证一个Worker对应一个Thread和一个Selector
                 selector = Selector.open();
                 thread = new Thread(this, name); // 当前worker对象就是执行单元
                 thread.start();
@@ -101,7 +106,7 @@ public class Server_06 {
                     throw new RuntimeException(e);
                 }
             });
-            selector.wakeup(); // 唤醒Selector#boss方法
+            selector.wakeup(); // 使Selector#select方法不再阻塞，继续运行
         }
 
         /**
@@ -111,7 +116,7 @@ public class Server_06 {
         public void run() {
             while (true) {
                 try {
-                    selector.select(); // 在此阻塞
+                    selector.select(); // 在此阻塞 (当有read事件或调用Selector#wakup方法主动唤醒时停止阻塞)
                     Runnable task = queue.poll();
                     if (task != null) {
                         task.run(); // 真正执行 "sc.register(selector, SelectionKey.OP_READ, null);"
@@ -134,6 +139,7 @@ public class Server_06 {
                 }
             }
         }
+
     }
 
 }

@@ -34,5 +34,7 @@
     <tree path="/src/test/java/cn/itcast/nio/c4/Server_06.java" title="p041_NIO+非阻塞模式+多路复用+多线程"
     <tree path="/src/test/java/cn/itcast/nio/c4/WriteServer.java" title="p037-可写事件（服务端）" extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c4/WriteClient.java" title="p037-可写事件（客户端）" extension="java"/>
-          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c5" title="IO模型"/>
+    <tree path="/src/test/java/cn/itcast/nio/c5/AioFileChannel.java" title="p052-文件异步IO" extension="java"/>
+    extension="java"/>
 </trees>
