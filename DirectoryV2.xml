@@ -28,9 +28,11 @@
     <tree path="/src/test/java/cn/itcast/nio/c4/Client_01.java" title="p023-客户端" extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c4/Client.java" title="p023-客户端" extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c4/Server_02.java" title="p025-NIO+非阻塞模式+单线程" extension="java"/>
-    <tree path="/src/test/java/cn/itcast/nio/c4/Server_03.java" title="p027-NIO+非阻塞模式+Selector+单线程" extension="java"/>
-    <tree path="/src/test/java/cn/itcast/nio/c4/Server_04.java" title="p033-处理消息边界" extension="java"/>
-    <tree path="/src/test/java/cn/itcast/nio/c4/Server_05.java" title="p035-读取一条完整的消息" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c4/Server_03.java" title="p027-NIO+非阻塞模式+多路复用+单线程" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c4/Server_04.java" title="p033-解决消息边界问题" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c4/Server_05.java" title="p035-解决消息完整性问题" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/c4/Server_06.java" title="p041_NIO+非阻塞模式+多路复用+多线程"
     <tree path="/src/test/java/cn/itcast/nio/c4/WriteServer.java" title="p037-可写事件（服务端）" extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c4/WriteClient.java" title="p037-可写事件（客户端）" extension="java"/>
+          extension="java"/>
 </trees>

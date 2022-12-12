@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 
 /**
- * 演示可写事件服务端
+ * 演示可写事件服务端 (大量数据一次写不完的情况)
  * <br>
  * 服务端向客户端写数据
  */

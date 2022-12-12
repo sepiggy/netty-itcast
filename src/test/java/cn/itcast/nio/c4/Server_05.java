@@ -14,7 +14,14 @@ import java.util.Iterator;
 import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
 
 /**
+ * 使用“NIO+非阻塞+多路复用(Selector)+单线程"解决Server端"消息完整性"问题
+ * <br>
+ * 使用run模式运行服务端
+ * <br>
+ * 在 {@link Server_04} 的基础上解决"消息完整性"问题
+ * <br>
  * 附件与扩容: 解决消息长度超过ByteBuffer容量的问题来保证每次都能读取一条完整的消息
+ * <br>
  * 要点：
  * <br>
  * 1) ByteBuffer需要支持动态扩容

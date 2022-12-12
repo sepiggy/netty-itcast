@@ -14,7 +14,7 @@ import java.util.Iterator;
 import static cn.itcast.nio.c2.ByteBufferUtil.debugRead;
 
 /**
- * 使用“NIO+非阻塞+单线程+Selector”解决Server端"忙等空转“问题
+ * 使用“NIO+非阻塞+多路复用(Selector)+单线程"解决Server端"忙等空转"问题
  * <br>
  * 使用run模式运行服务端
  * <br>

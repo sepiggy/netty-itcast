@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
 /**
- * 演示可写事件客户端
+ * 演示可写事件客户端 (大量数据一次写不完的情况)
  */
 public class WriteClient {
 

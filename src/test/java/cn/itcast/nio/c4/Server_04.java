@@ -14,6 +14,10 @@ import java.util.Iterator;
 import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
 
 /**
+ * 使用“NIO+非阻塞+多路复用(Selector)+单线程"解决Server端"处理消息边界“问题
+ * <br>
+ * 使用run模式运行服务端
+ * <br>
  * 在{@link Server_03}基础上处理消息边界
  * <br>
  * 这里使用分隔符方式(\n)处理消息边界，遇到"\n"就拆分为一条完整的消息
