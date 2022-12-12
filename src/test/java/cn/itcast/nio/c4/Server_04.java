@@ -14,32 +14,26 @@ import java.util.Iterator;
 import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
 
 /**
- * 处理消息边界 (p31、p32、p33)
- * 这里使用分隔符方式
- * 这个 Demo 里发送的 "完整消息长度" (以\n为边界) 超过 ByteBuffer 的容量, 会出现两个问题：
+ * 在{@link Server_03}基础上处理消息边界
+ * <br>
+ * 这里使用分隔符方式(\n)处理消息边界，遇到"\n"就拆分为一条完整的消息
+ * <br>
+ * 结论：
+ * <br>
+ * 这个Demo里发送的"完整消息长度"(以\n为边界)若超过ByteBuffer的容量，会出现两个问题：
+ * <br>
  * 1) 不会报错，但会丢失消息
- * 2) 触发两次读事件
- * 解决方案 (见 Server_05)：
- * 1) ByteBuffer 需要支持动态扩容
- * 2) ByteBuffer 不能作为局部变量, 以保证发生两次读事件时用的同一个 ByteBuffer
+ * <br>
+ * 2) 触发多次读事件
+ * <br>
+ * 解决方案 {@link Server_05}：
+ * <br>
+ * 1) ByteBuffer需要支持动态扩容
+ * <br>
+ * 2) 增加ByteBuffer的生命周期, 以保证发生多次读事件时用同一个ByteBuffer接收
  */
 @Slf4j
 public class Server_04 {
-
-    private static void split(ByteBuffer source) {
-        source.flip(); // 切换读模式
-        for (int i = 0; i < source.limit(); i++) {
-            if (source.get(i) == '\n') {
-                int length = i + 1 - source.position();
-                ByteBuffer target = ByteBuffer.allocate(length);
-                for (int j = 0; j < length; j++) {
-                    target.put(source.get());
-                }
-                debugAll(target);
-            }
-        }
-        source.compact(); // 切换写模式
-    }
 
     public static void main(String[] args) throws IOException {
 
@@ -58,16 +52,19 @@ public class Server_04 {
                 iterator.remove();
                 log.debug("key: {}", key);
                 if (key.isAcceptable()) {
+                    log.debug("有accept事件发生");
                     ServerSocketChannel channel = (ServerSocketChannel) key.channel();
                     SocketChannel sc = channel.accept();
                     sc.configureBlocking(false);
                     SelectionKey scKey = sc.register(selector, 0, null);
                     scKey.interestOps(SelectionKey.OP_READ);
-                    log.debug("{}", sc);
-                    log.debug("scKey: {}", scKey);
+                    log.debug("SocketChannel: {}", sc);
+                    log.debug("SelectionKey: {}", scKey);
                 } else if (key.isReadable()) {
+                    log.debug("有read事件发生");
                     try {
                         SocketChannel channel = (SocketChannel) key.channel();
+                        // 演示消息边界问题 (ByteBuffer容量不足)
 //                        ByteBuffer buffer = ByteBuffer.allocate(4);
                         ByteBuffer buffer = ByteBuffer.allocate(16);
                         int read = channel.read(buffer);
@@ -86,4 +83,20 @@ public class Server_04 {
             }
         }
     }
+
+    private static void split(ByteBuffer source) {
+        source.flip(); // 切换读模式
+        for (int i = 0; i < source.limit(); i++) {
+            if (source.get(i) == '\n') {
+                int length = i + 1 - source.position();
+                ByteBuffer target = ByteBuffer.allocate(length);
+                for (int j = 0; j < length; j++) {
+                    target.put(source.get());
+                }
+                debugAll(target);
+            }
+        }
+        source.compact(); // 切换写模式
+    }
+
 }

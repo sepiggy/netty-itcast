@@ -14,12 +14,12 @@ import static cn.itcast.nio.c2.ByteBufferUtil.debugRead;
 
 /**
  * 使用"NIO+单线程"来理解阻塞模式 (服务端)
- * <p></p>
+ * <br>
  * 使用Run模式运行服务端
- * <p></p>
+ * <br>
  * 阻塞模式下，accept方法和read方法都是阻塞方法，且在单线程环境下，多个阻塞方法会相互影响
- * <p></p>
- * 结论：使用“NIO+单线程+阻塞模式”不可以处理多个客户端的连接和读写，相互之间会有影响
+ * <br>
+ * 结论：使用“NIO+单线程+阻塞模式”不可以处理多个客户端的连接和读写，相互之间会有影响，需要进一步优化：{@link Server_02}
  */
 @Slf4j
 public class Server_01 {

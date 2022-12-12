@@ -15,6 +15,24 @@ import static cn.itcast.nio.c2.ByteBufferUtil.debugRead;
 
 /**
  * 使用“NIO+非阻塞+单线程+Selector”解决Server端"忙等空转“问题
+ * <br>
+ * 使用run模式运行服务端
+ * <br>
+ * 引入Selector解决忙等空转问题，使用Selector步骤：
+ * <br>
+ * 1) 创建Selector: 使用Selector#open方法
+ * <br>
+ * 2) 获取SelectionKey：使用Channel#register将某个Channel关心的事件注册到Selector上
+ * <br>
+ * 3) 移除SelectionKey
+ * <br>
+ * 4) 处理事件 (正常处理 or 取消)
+ * <br>
+ * 结论：
+ * <br>
+ * 1. 使用"NIO+非阻塞+Selector+单线程“模式可以解决Server端”忙等空转“的问题
+ * <br>
+ * 2. 但读取数据的时候没有做消息边界的处理，需要进一步做优化：{@link Server_04}
  */
 @Slf4j
 public class Server_03 {
@@ -33,7 +51,7 @@ public class Server_03 {
         // 注意：通过SelectionKey可以知道将来哪个Channel发生哪个事件
         // 注意：一个Selector可以管理多个Channel
         // 注意：不同的事件类型可以通过不同的SelectionKey来管理
-        // 注意：也就是一个Selector对应多个Channel，对应多个SelectionKey
+        // 注意：也就是一个Selector对应多个SelectionKey, 一个SelectionKey管理多个Channel
 
         // 四种事件类型：
         // accept - 会在有连接请求时触发 (ServerSocketChannel独有)
@@ -58,8 +76,8 @@ public class Server_03 {
             // 注意：2. 取消事件: 调用SelectionKey#cancel方法
             selector.select();
 
-            // 4. 处理事件, selectedKeys的返回值包含了所有发生的事件
-            // 注意：这里后面需要对selectionKey进行删除操作，因此这里只能用迭代器进行遍历，不能使用增强for进行遍历
+            // 4. 处理事件, Selector#selectedKeys的返回值包含了所有已触发事件的SelectionKey
+            // 注意：这里后面需要对已触发事件的SelectionKey进行删除操作，因此这里只能用迭代器进行遍历，不能使用增强for进行遍历
             Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
             while (iterator.hasNext()) {
                 SelectionKey key = iterator.next();
@@ -89,12 +107,13 @@ public class Server_03 {
                         ByteBuffer buffer = ByteBuffer.allocate(16);
                         int read = channel.read(buffer);
                         if (read == -1) {  // 注意：如果是正常断开，read的方法返回值是-1
+                            log.debug("{}断开连接", channel);
                             key.cancel();
                         } else {
                             buffer.flip();
                             debugRead(buffer);
                         }
-                    } catch (IOException e) {
+                    } catch (IOException e) { // 客户端断开会抛出IOException异常，这里进行捕获
                         e.printStackTrace();
                         key.cancel(); // 注意：如果是异常断开，因为客户端断开了，因此需要反注册，将其从selectedKeys集合中删除
                     }
