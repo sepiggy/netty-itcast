@@ -36,6 +36,16 @@
     <tree path="/src/test/java/cn/itcast/nio/c4/WriteClient.java" title="p037-可写事件（客户端）" extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c5" title="IO模型"/>
     <tree path="/src/test/java/cn/itcast/nio/c5/AioFileChannel.java" title="p052-文件异步IO" extension="java"/>
-    <tree path="/src/test/java/cn/itcast/netty/c2" title="Netty的HelloWorld"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/hello" title="Netty的HelloWorld"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/eventloop" title="Netty的EventLoop讲解"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic" title="Netty基础讲解"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/eventloop/TestEventLoop.java" title="p059-EventLoop处理普通任务和定时任务"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/eventloop/EventLoopServer_0.java" title="p060-EventLoop处理IO事件之服务端"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/eventloop/EventLoopClient_0.java" title="p060-EventLoop处理IO事件之客户端"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/eventloop/EventLoopServer_1.java"
+          title="p061-对Server端的EventLoop进行细分" extension="java"/>
     extension="java"/>
 </trees>
