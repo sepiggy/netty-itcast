@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
  * <p></p>
  * 一旦Client与Server建立连接，会发生如下几件事情：
  * 1) Server端的accept事件发生，Netty内置的accept事件处理器acceptor会调用ChannelInitializer#initChannel方法，添加读写事件的事件处理器
- * 2) SocketChannel会与Server端的一个EventLoop进行绑定，后续的读写事件都会使用同一个绑定的EventLoop来处理
+ * 2) SocketChannel会与Server端的一个EventLoop(NioEventLoopGroup或DefaultEventLoopGroup中的一个EventLoop)进行绑定，后续的事件处理(包括IO事件、其他任务、定时任务)都会使用同一个绑定的EventLoop来处理
  * </pre>
  */
 @Slf4j

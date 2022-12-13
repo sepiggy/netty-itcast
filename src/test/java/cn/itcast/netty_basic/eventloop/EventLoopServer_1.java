@@ -2,53 +2,43 @@ package cn.itcast.netty_basic.eventloop;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.*;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
- * <h2>对Server端的EventLoop进行功能细分</h2>
- * <h2></h2>
- * 无论是哪种 EventLoopGroup, 只要绑定一次，后面就只会用这个线程处理对应的事件或者 Handler
- * NioEventLoopGroup: 处理 Accept, Read, Write 事件
- * DefaultEventLoopGroup: 处理用时较长的 Handler
+ * <h2>Server端的EventLoop细分为Boss和Worker</h2>
+ * <h3>(在{@link EventLoopClient_0}的基础上)</h3>
+ * <pre>
+ * 使用run模式启动
+ * <p></p>
+ * 使用"ServerBootstrap#group(EventLoopGroup parentGroup, EventLoopGroup childGroup)"方法将Server端的EventLoopGroup进一步细分为两组EventLoopGroup即Boss和Worker:
+ *  1)Boss只负责处理ServerSocketChannel上的accept事件
+ *  2)Worker只负责处理SocketChannel上的read和write事件
+ * </pre>
  */
 @Slf4j
 public class EventLoopServer_1 {
 
     public static void main(String[] args) {
-        // 细分2：创建一个独立的 EventLoopGroup
-        // 用来处理耗时较长的操作，避免阻塞 IO 线程
-        // 可以单独声明一个 EventLoopGroup 单独处理一个耗时较长的 Handler,
-        // 这样做可以避免阻塞 IO 线程
-        EventLoopGroup group = new DefaultEventLoopGroup();
         new ServerBootstrap()
-                // boss 和 worker
-                // 细分1：
-                // boss 只负责 ServerSocketChannel 上 accept 事件
-                // worker 只负责 socketChannel 上的读写
+                // 细分为Boss和Worker
                 .group(new NioEventLoopGroup(), new NioEventLoopGroup(2))
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
-                        ch.pipeline().addLast("handler1", new ChannelInboundHandlerAdapter() {
-                            @Override                                         // ByteBuf
+                        ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+                            @Override
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                                 ByteBuf buf = (ByteBuf) msg;
-                                log.debug(buf.toString(Charset.defaultCharset()));
-                                ctx.fireChannelRead(msg); // 让消息传递给下一个handler
-                            }
-                        }).addLast(group, "handler2", new ChannelInboundHandlerAdapter() {
-                            // 处理这个 handler 用的线程不是 worker 线程，而是上面新建的事件循环组
-                            @Override                                         // ByteBuf
-                            public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                                ByteBuf buf = (ByteBuf) msg;
-                                log.debug(buf.toString(Charset.defaultCharset()));
+                                log.debug(buf.toString(StandardCharsets.UTF_8));
                             }
                         });
                     }
