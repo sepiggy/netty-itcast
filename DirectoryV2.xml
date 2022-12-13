@@ -36,5 +36,6 @@
     <tree path="/src/test/java/cn/itcast/nio/c4/WriteClient.java" title="p037-可写事件（客户端）" extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c5" title="IO模型"/>
     <tree path="/src/test/java/cn/itcast/nio/c5/AioFileChannel.java" title="p052-文件异步IO" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty/c2" title="Netty的HelloWorld"/>
     extension="java"/>
 </trees>
