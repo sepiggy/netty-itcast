@@ -10,14 +10,14 @@ import io.netty.handler.codec.string.StringEncoder;
 import java.net.InetSocketAddress;
 
 /**
- * <h2>EventLoop处理IO事件之客户端</h2>
+ * <h2>EventLoop演示之客户端</h2>
  * <pre>
  * 使用debug模式启动
  * 注意：因为Netty的客户端是多线程的，其执行Channel写操作的线程并不是主线程，因此打断点时要使用IDEA的Thread模式，不会阻塞所有线程
  * 注意：在debug模式evaluate如下表达式'channel.writeAndFlush("1")' (注意必须是字符串"1"，不能是数字1)
  * </pre>
  */
-public class EventLoopClient_0 {
+public class EventLoopClient {
 
     public static void main(String[] args) throws InterruptedException {
         Channel channel = new Bootstrap()

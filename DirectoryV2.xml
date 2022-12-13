@@ -49,5 +49,6 @@
           title="p061-Server端的EventLoop细分为Boss和Worker" extension="java"/>
     <tree path="/src/test/java/cn/itcast/netty_basic/eventloop/EventLoopServer_2.java"
           title="p062-耗时较长的操作可以创建专门的EventLoopGroup" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/channel" title="Netty的Channel讲解"/>
     extension="java"/>
 </trees>

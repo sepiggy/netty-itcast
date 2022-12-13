@@ -1,4 +1,4 @@
-package cn.itcast.netty_basic.c3;
+package cn.itcast.netty_basic.channel;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -12,12 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.InetSocketAddress;
 
 /**
- * ChannelFuture
+ * <h2>ChannelFuture</h2>
+ * 参考 {@link ChannelFuture} 的JavaDoc
  */
 @Slf4j
-public class EventLoopClient_1 {
+public class ChannelClient_0 {
 
     public static void main(String[] args) throws InterruptedException {
+
         ChannelFuture channelFuture = new Bootstrap()
                 .group(new NioEventLoopGroup())
                 .channel(NioSocketChannel.class)
@@ -35,9 +37,9 @@ public class EventLoopClient_1 {
                 // 因此需要调用 ChannelFuture 的 sync 方法
                 .connect(new InetSocketAddress("localhost", 8080));
 
-        channelFuture.sync();
+//        channelFuture.sync();
 
-        // 无阻塞向下执行获取 Channel 对象
+        // 无阻塞向下执行获取Channel对象
         Channel channel = channelFuture.channel();
         log.debug("{}", channel);
 
