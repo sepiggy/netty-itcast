@@ -12,11 +12,16 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.InetSocketAddress;
 
 /**
- * <h2>ChannelFuture</h2>
- * 参考 {@link ChannelFuture} 的JavaDoc
+ * <h2>方法1.使用ChannelFuture#sync方法同步处理Channel建立</h2>
+ * <pre>
+ * 注意：此方法下等待结果和处理结果的都是main线程:
+ * 1) 等待什么结果？等待连接建立的结果，也就是等待BootStrap#connect方法完成的结果
+ * 2) 处理什么结果？处理连接建立的结果，这里就是获取到Channel对象
+ * 3) 真正执行连接建立操作的也就是响应accept事件的是NioEventLoopGroup线程
+ * </pre>
  */
 @Slf4j
-public class ChannelClient_0 {
+public class ChannelFutureClient_1 {
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -29,20 +34,15 @@ public class ChannelClient_0 {
                         ch.pipeline().addLast(new StringEncoder());
                     }
                 })
-                // ATTN connect 是异步非阻塞方法
-                // main 线程发起了调用
-                // 真正执行连接操作的是另一个线程 （Nio线程)
-                // 这里的连接操作是比较耗时的
-                // 在此期间是获取不到 Channel 对象的
-                // 因此需要调用 ChannelFuture 的 sync 方法
                 .connect(new InetSocketAddress("localhost", 8080));
 
-//        channelFuture.sync();
+        // ChannelFuture#sync方法是"同步阻塞"方法，使用sync方法来同步处理结果
+        channelFuture.sync(); // main线程阻塞在此，直到NioEventLoop线程连接建立完毕
 
-        // 无阻塞向下执行获取Channel对象
+        // 注意：以下三行代码会在main线程执行
         Channel channel = channelFuture.channel();
+        // 22:35:35 [DEBUG] [main] c.i.n.c.EventLoopClient_2 - [id: 0x636c89a4, L:/127.0.0.1:47016 - R:localhost/127.0.0.1:8080]
         log.debug("{}", channel);
-
         channel.writeAndFlush("hello, world");
     }
 

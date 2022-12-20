@@ -11,10 +11,10 @@ import io.netty.handler.codec.string.StringDecoder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * <h2>Channel演示之服务端</h2>
+ * <h2>演示Channel建立的服务端</h2>
  */
 @Slf4j
-public class ChannelServer {
+public class ChannelFutureServer {
 
     public static void main(String[] args) {
 

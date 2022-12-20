@@ -46,9 +46,27 @@
     <tree path="/src/test/java/cn/itcast/netty_basic/eventloop/EventLoopClient_0.java" title="p060-EventLoop处理IO事件之客户端"
           extension="java"/>
     <tree path="/src/test/java/cn/itcast/netty_basic/eventloop/EventLoopServer_1.java"
-          title="p061-Server端的EventLoop细分为Boss和Worker" extension="java"/>
+          title="p061-改进1_Server端的EventLoop细分为Boss和Worker" extension="java"/>
     <tree path="/src/test/java/cn/itcast/netty_basic/eventloop/EventLoopServer_2.java"
-          title="p062-耗时较长的操作可以创建专门的EventLoopGroup" extension="java"/>
+          title="p062-改进2_耗时较长的操作可以创建专门的EventLoopGroup" extension="java"/>
     <tree path="/src/test/java/cn/itcast/netty_basic/channel" title="Netty的Channel讲解"/>
-    extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/eventloop/EventLoopClient.java" title="p060-EventLoop处理IO事件之客户端"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/channel/ChannelFutureServer.java" title="p065-演示Channel建立的服务端"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/channel/ChannelFutureClient_0.java"
+          title="p065-连接建立问题的引入" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/channel/ChannelFutureClient_1.java"
+          title="p066-方法1_使用ChannelFuture#sync方法同步处理Channel建立" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/channel/ChannelFutureClient_2.java"
+          title="p066-方法2_使用ChannelFuture#addListener方法异步处理Channel建立" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/channel/CloseFutureServer.java" title="p067-演示Channel关闭的服务端"
+          extension="java"/>
+   <tree path="/src/test/java/cn/itcast/netty_basic/channel/CloseFutureClient_0.java" title="p067-连接关闭问题的引入"
+         extension="java"/>
+   <tree path="/src/test/java/cn/itcast/netty_basic/channel/CloseFutureClient_1.java"
+         title="p068-方法1_使用CloseFuture#sync方法同步处理Channel关闭" extension="java"/>
+   <tree path="/src/test/java/cn/itcast/netty_basic/channel/CloseFutureClient_2.java"
+         title="p068-方法2_使用CloseFuture#addListener方法异步处理Channel关闭" extension="java"/>
+   extension="java"/>
 </trees>
