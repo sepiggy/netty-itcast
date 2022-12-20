@@ -1,4 +1,4 @@
-package cn.itcast.netty_basic.c3;
+package cn.itcast.netty_basic.future_promise;
 
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelHandlerContext;

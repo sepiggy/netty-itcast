@@ -68,5 +68,10 @@
          title="p068-方法1_使用CloseFuture#sync方法同步处理Channel关闭" extension="java"/>
    <tree path="/src/test/java/cn/itcast/netty_basic/channel/CloseFutureClient_2.java"
          title="p068-方法2_使用CloseFuture#addListener方法异步处理Channel关闭" extension="java"/>
+   <tree path="/src/test/java/cn/itcast/netty_basic/future_promise" title="Netty异步关键-Future和Promise"/>
+   <tree path="/src/test/java/cn/itcast/netty_basic/future_promise/TestJdkFuture.java" title="p072-JDK中的Future"
+         extension="java"/>
+   <tree path="/src/test/java/cn/itcast/netty_basic/future_promise/TestNettyFuture.java" title="p073-Netty中的Future"
+         extension="java"/>
    extension="java"/>
 </trees>
