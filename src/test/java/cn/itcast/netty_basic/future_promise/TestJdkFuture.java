@@ -9,15 +9,10 @@ import java.util.concurrent.*;
  * <pre>
  * JDK中的Future只能以"同步"的方式获取结果:
  * 调用Future#get方法以同步的方式获取结果
- *
- *
- *
- * </pre>
- * <pre>
- * 注意：执行任务的线程和获取结果的线程不是同一个线程
- * 执行任务是线程池中的线程，而获取结果的是main线程
+ * 注意：在同步的方式中，线程自己去主动获取结果
+ * 注意：获取结果的线程是main线程，而执行任务的线程是线程池中的线程
+ * 注意：Future可以看作在线程间传递结果的容器
  * <p></p>
- * future可以看作在线程间传递结果的容器
  * 运行结果：
  * 11:01:12 [DEBUG] [main] c.i.n.c.TestJdkFuture - 等待结果
  * 11:01:12 [DEBUG] [pool-1-thread-1] c.i.n.c.TestJdkFuture - 执行计算

@@ -73,5 +73,16 @@
          extension="java"/>
    <tree path="/src/test/java/cn/itcast/netty_basic/future_promise/TestNettyFuture.java" title="p073-Netty中的Future"
          extension="java"/>
-   extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/future_promise/TestNettyPromise.java" title="p074-Netty中的Promise"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/handler_pipeline" title="Netty处理流程-Handler和Pipeline"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/handler_pipeline/TestPipelineClient.java"
+          title="p075-Handler和Pipeline演示的客户端" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/handler_pipeline/TestPipelineServer_0.java"
+          title="p075-Handler和Pipeline演示的服务端之处理器执行顺序" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/handler_pipeline/TestPipelineServer_1.java"
+          title="p076-Handler和Pipeline演示的服务端之入站处理器" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/handler_pipeline/TestPipelineServer_2.java"
+          title="p077-Handler和Pipeline演示的服务端之出站处理器" extension="java"/>
+    extension="java"/>
 </trees>

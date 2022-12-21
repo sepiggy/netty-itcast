@@ -12,18 +12,19 @@ import java.util.concurrent.ExecutionException;
 /**
  * <h2>演示Netty中的Future</h2>
  * <pre>
- * 区别于JDK中的Future, Netty中的Future不仅可以以"同步"的方式获取结果，而且可以以"异步"的方式获取结果
- * <p>
- * 1) 同步的方式获取结果: future#get
- * 在同步的方式中调用 future#get 方法的线程和接收结果的线程都是一个线程：main 线程
- * 见日志：
+ * 1) Netty中的Future继承自JDK中的Future
+ * 2) 区别于JDK中的Future, Netty中的Future不仅可以以"同步"的方式获取结果，而且可以以"异步"的方式获取结果
+ * 2.1) 同步的方式获取结果: Future#get
+ * 注意：在同步的方式中，线程自己去主动获取结果
+ * 注意：获取结果的线程是main线程，而执行任务的线程是NioEventLoop中的线程
+ * 运行结果：
  * 11:12:36 [DEBUG] [nioEventLoopGroup-2-1] c.i.n.c.TestNettyFuture - 执行计算
  * 11:12:36 [DEBUG] [main] c.i.n.c.TestNettyFuture - 等待结果
- * 11:12:39 [DEBUG] [main] c.i.n.c.TestNettyFuture - 结果是 70
- * <p>
- * 2) 异步的方式获取结果: future#addListener
- * 在异步的方式中调用 future#addListener 方法的线程和接收结果的线程不是一个线程: 一个 main 线程，一个 NioEventLoop 线程
- * 见日志：
+ * 11:12:39 [DEBUG] [main] c.i.n.c.TestNettyFuture - 结果是:70
+ * 2.2) 异步的方式获取结果: Future#addListener
+ * 注意：在异步的方式中，线程自己不去主动获取结果，而是由其它线程送结果
+ * 注意：获取结果的线程是NioEventLoop中的线程，而执行任务的线程也是NioEventLoop中的线程
+ * 运行结果：
  * 11:16:23 [DEBUG] [nioEventLoopGroup-2-1] c.i.n.c.TestNettyFuture - 执行计算
  * 11:16:26 [DEBUG] [nioEventLoopGroup-2-1] c.i.n.c.TestNettyFuture - 接收结果:70
  * </pre>
@@ -48,8 +49,8 @@ public class TestNettyFuture {
         });
 
         // 方法1. 同步方式接收结果
-//        log.debug("等待结果");
-//        log.debug("结果是 {}", future.get()); // 阻塞
+        // log.debug("等待结果");
+        // log.debug("结果是:{}", future.get()); // 阻塞在此
 
         // 方法2. 异步方式接收结果
         future.addListener(new GenericFutureListener<Future<? super Integer>>() {
