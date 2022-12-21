@@ -1,4 +1,4 @@
-package cn.itcast.netty_advanced.c1;
+package cn.itcast.netty_advanced.packet;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;

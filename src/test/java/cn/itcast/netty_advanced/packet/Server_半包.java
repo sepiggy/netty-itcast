@@ -1,38 +1,34 @@
-package cn.itcast.netty_advanced.c1;
+package cn.itcast.netty_advanced.packet;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.AdaptiveRecvByteBufAllocator;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 演示通过 ”行解码器“ 的方案解决粘包、半包问题
+ * 演示半包现象
  */
 @Slf4j
-public class Server_行解码器 {
+public class Server_半包 {
+
     void start() {
         NioEventLoopGroup boss = new NioEventLoopGroup();
         NioEventLoopGroup worker = new NioEventLoopGroup();
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.channel(NioServerSocketChannel.class);
-            // 调整系统的接收缓冲区（滑动窗口）
-//            serverBootstrap.option(ChannelOption.SO_RCVBUF, 10);
-            // 调整 netty 的接收缓冲区（byteBuf）
-            serverBootstrap.childOption(ChannelOption.RCVBUF_ALLOCATOR, new AdaptiveRecvByteBufAllocator(16, 16, 16));
+            // 调小服务端的接收缓冲区, 使半包现象更明显
+            serverBootstrap.option(ChannelOption.SO_RCVBUF, 10);
             serverBootstrap.group(boss, worker);
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new LineBasedFrameDecoder(1024)); // 行解码器
                     ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
                 }
             });
@@ -47,6 +43,7 @@ public class Server_行解码器 {
     }
 
     public static void main(String[] args) {
-        new Server_行解码器().start();
+        new Server_半包().start();
     }
+
 }

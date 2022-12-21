@@ -102,5 +102,18 @@
           title="p088-零拷贝-CompositeByteBuf" extension="java"/>
     <tree path="/src/test/java/cn/itcast/netty_advanced" title="Netty进阶"/>
     <tree path="/src/test/java/cn/itcast/netty_basic/echo" title="回声服务端客户端实现"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/packet" title="粘包与半包"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/packet/Client_粘包.java" title="p091-粘包现象演示客户端" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/packet/Server_粘包.java" title="p091-粘包现象演示服务端" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/packet/Server_半包.java" title="p091-半包现象演示服务端" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/packet/Client_半包.java" title="p091-半包现象演示客户端" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/packet/Client_短连接.java" title="p094-粘包半包解决方案1-短链接(客户端)"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/packet/Server_短连接.java" title="p094-粘包半包解决方案1-短链接(服务端)"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/packet/Server_定长解码器.java" title="p095-粘包半包解决方案2-定长解码器(服务端)"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/packet/Client_定长解码器.java" title="p095-粘包半包解决方案2-定长解码器(客户端)"
+          extension="java"/>
     extension="java"/>
 </trees>

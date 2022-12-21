@@ -1,4 +1,4 @@
-package cn.itcast.netty_advanced.c1;
+package cn.itcast.netty_advanced.packet;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -18,8 +18,10 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- * 使用 ”定长解码器“ 方案来解决粘包、半包问题
- * ATTN 缺点：浪费空间
+ * <h2>粘包半包解决方案2-定长解码器(客户端)</h2>
+ * <pre>
+ * 缺点：定长解码器虽然可以解决粘包、半包问题，但是浪费空间
+ * </pre>
  */
 public class Client_定长解码器 {
 
@@ -30,7 +32,13 @@ public class Client_定长解码器 {
         System.out.println("finish");
     }
 
-    // 产生10个字节长度的定长消息
+    /**
+     * 辅助方法：产生10个字节长度的定长消息，不足10个长度的用_补齐
+     *
+     * @param c
+     * @param len
+     * @return
+     */
     public static byte[] fill10Bytes(char c, int len) {
         byte[] bytes = new byte[10];
         Arrays.fill(bytes, (byte) '_');
@@ -52,14 +60,13 @@ public class Client_定长解码器 {
                 protected void initChannel(SocketChannel ch) {
                     ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
                     ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
-                        // 会在连接 channel 建立成功后，会触发 active 事件
                         @Override
                         public void channelActive(ChannelHandlerContext ctx) {
                             ByteBuf buf = ctx.alloc().buffer();
                             char c = '0';
                             Random r = new Random();
+                            // 发送10条随机长度随机字符的数据
                             for (int i = 0; i < 10; i++) {
-                                // 长生随机长度的数据
                                 byte[] bytes = fill10Bytes(c, r.nextInt(10) + 1);
                                 c++;
                                 buf.writeBytes(bytes);
