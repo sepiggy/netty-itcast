@@ -1,4 +1,4 @@
-package cn.itcast.advance.c1;
+package cn.itcast.netty_advanced.c1;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -13,14 +13,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 演示粘包现象
+ * 通过"短连接"方案解决粘包问题
+ * 以连接建立和连接断开作为消息边界
+ * ATTN 短连接发送完数据就断开，发送完数据就断开，是不会造成粘包现象的
+ * ATTN 缺点：
+ * 1. 效率低
+ * 2. 短连接并不能解决半包问题
  */
-public class Client_粘包 {
+public class Client_短连接 {
 
-    static final Logger log = LoggerFactory.getLogger(Client_粘包.class);
+    static final Logger log = LoggerFactory.getLogger(Client_短连接.class);
 
     public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            send(); // 通过多次调用 send 方法来实现发送多条数据
+        }
+        System.out.println("finish");
+    }
 
+    /**
+     * 短连接发送：客户端发送完数据就断开
+     */
+    private static void send() {
         NioEventLoopGroup worker = new NioEventLoopGroup();
         try {
             Bootstrap bootstrap = new Bootstrap();
@@ -30,23 +44,17 @@ public class Client_粘包 {
                 @Override
                 protected void initChannel(SocketChannel ch) {
                     ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
-                        // 在连接 channel 建立成功后，会触发 active 事件
-                        // 与之前在客户端使用 sync 方式效果是一样的
+                        // 会在连接 channel 建立成功后，会触发 active 事件
                         @Override
                         public void channelActive(ChannelHandlerContext ctx) {
+                            ByteBuf buf = ctx.alloc().buffer(16);
+                            // 用来演示粘包
+//                            buf.writeBytes(new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
 
-                            // ATTN 什么是粘包现象？
-                            // 客户端向服务端发送了 10 次数据 （调用了 10 次 writeAndFlush)
-                            // 每次发送 16B
-                            // 而客户端会一次性接收 160B 数据，这就是粘包现象
-                            // EventLoopGroup-3-1] i.n.h.l.LoggingHandler - [id: 0x289fde34, L:/127.0.0.1:8080 - R:/127.0.0.1:42964] READ: 160B
-
-                            for (int i = 0; i < 10; i++) {
-                                // 在 Handler 中最好使用 ctx 来分配 ByteBuf
-                                ByteBuf buf = ctx.alloc().buffer(16);
-                                buf.writeBytes(new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
-                                ctx.writeAndFlush(buf);
-                            }
+                            // 用来演示半包
+                            buf.writeBytes(new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17});
+                            ctx.writeAndFlush(buf);
+                            ctx.channel().close(); // 客户端发送完消息就断开
                         }
                     });
                 }

@@ -1,11 +1,13 @@
-package cn.itcast.netty_basic.c5;
+package cn.itcast.netty_basic.echo;
 
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 
-public class TestClient {
+public class TestServer {
     public static void main(String[] args) throws IOException {
-        Socket s = new Socket("localhost", 8888);
+        ServerSocket ss = new ServerSocket(8888);
+        Socket s = ss.accept();
 
         new Thread(() -> {
             try {

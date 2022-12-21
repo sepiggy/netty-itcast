@@ -1,4 +1,4 @@
-package cn.itcast.advance.c2;
+package cn.itcast.netty_advanced.c2;
 
 import cn.itcast.message.LoginRequestMessage;
 import cn.itcast.protocol.MessageCodec;

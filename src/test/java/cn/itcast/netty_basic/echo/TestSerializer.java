@@ -1,4 +1,4 @@
-package cn.itcast.netty_basic.c5;
+package cn.itcast.netty_basic.echo;
 
 import cn.itcast.config.Config;
 import cn.itcast.message.LoginRequestMessage;

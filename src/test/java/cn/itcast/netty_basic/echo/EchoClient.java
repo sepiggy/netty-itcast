@@ -1,4 +1,4 @@
-package cn.itcast.netty_basic.c5;
+package cn.itcast.netty_basic.echo;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;

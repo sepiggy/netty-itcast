@@ -95,5 +95,12 @@
           extension="java"/>
     <tree path="/src/test/java/cn/itcast/netty_basic/bytebuf/TestByteBuf_2.java" title="p080-ByteBuf与内存池化"
           extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/bytebuf/TestSlice_0.java" title="p086-切片与原始数组底层使用同一块内存"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/bytebuf/TestSlice_1.java" title="p087-切片与retain方法" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/bytebuf/TestCompositeByteBuf.java"
+          title="p088-零拷贝-CompositeByteBuf" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced" title="Netty进阶"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/echo" title="回声服务端客户端实现"/>
     extension="java"/>
 </trees>
