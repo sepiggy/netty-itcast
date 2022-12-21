@@ -86,5 +86,14 @@
           title="p077-Handler和Pipeline演示的服务端之出站处理器" extension="java"/>
     <tree path="/src/test/java/cn/itcast/netty_basic/handler_pipeline/TestEmbeddedChannel.java"
           title="p078-使用EmbeddedChannel调试Handler" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio" title="NIO讲解"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/bytebuf" title="Netty的ByteBuf讲解"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/bytebuf/TestByteBuf_0.java" title="p079-ByteBuf的创建与扩容" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/bytebuf/ByteBufUtil.java" title="p079-ByteBuf的调试工具类"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/bytebuf/TestByteBuf_1.java" title="p080-ByteBuf内存模式_直接内容或者堆内存"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/bytebuf/TestByteBuf_2.java" title="p080-ByteBuf与内存池化"
+          extension="java"/>
     extension="java"/>
 </trees>
