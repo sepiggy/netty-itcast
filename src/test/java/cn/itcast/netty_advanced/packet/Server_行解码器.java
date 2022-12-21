@@ -1,10 +1,8 @@
 package cn.itcast.netty_advanced.packet;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.AdaptiveRecvByteBufAllocator;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -14,25 +12,28 @@ import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 演示通过 ”行解码器“ 的方案解决粘包、半包问题
+ * <h2>粘包半包解决方案3-行解码器(服务端)</h2>
+ * <pre>
+ * {@link LineBasedFrameDecoder}: 以换行符作为分隔符的行解码器
+ * {@link io.netty.handler.codec.DelimiterBasedFrameDecoder}: 可以自定义分隔符的行解码器
+ * 缺点：需要扫描消息内容，效率较低
+ * </pre>
  */
 @Slf4j
 public class Server_行解码器 {
+
     void start() {
         NioEventLoopGroup boss = new NioEventLoopGroup();
         NioEventLoopGroup worker = new NioEventLoopGroup();
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.channel(NioServerSocketChannel.class);
-            // 调整系统的接收缓冲区（滑动窗口）
-//            serverBootstrap.option(ChannelOption.SO_RCVBUF, 10);
-            // 调整 netty 的接收缓冲区（byteBuf）
-            serverBootstrap.childOption(ChannelOption.RCVBUF_ALLOCATOR, new AdaptiveRecvByteBufAllocator(16, 16, 16));
             serverBootstrap.group(boss, worker);
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new LineBasedFrameDecoder(1024)); // 行解码器
+                    // 行解码器
+                    ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
                     ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
                 }
             });
@@ -49,4 +50,5 @@ public class Server_行解码器 {
     public static void main(String[] args) {
         new Server_行解码器().start();
     }
+
 }

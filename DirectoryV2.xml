@@ -115,5 +115,14 @@
           extension="java"/>
     <tree path="/src/test/java/cn/itcast/netty_advanced/packet/Client_定长解码器.java" title="p095-粘包半包解决方案2-定长解码器(客户端)"
           extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/packet/Client_行解码器.java" title="p096-粘包半包解决方案3-行解码器(客户端)"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/packet/Server_行解码器.java" title="p096-粘包半包解决方案3-行解码器(服务端)"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/packet/TestLengthFieldDecoder.java" title="p098-LTC解码器测试"
+          extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/protocol" title="协议的解析与设计"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/protocol/TestRedis.java" title="p099-使用Netty实现Redis客户端"
+          extension="java"/>
     extension="java"/>
 </trees>

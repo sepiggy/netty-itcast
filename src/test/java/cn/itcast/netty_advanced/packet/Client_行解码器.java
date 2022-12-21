@@ -17,9 +17,10 @@ import org.slf4j.LoggerFactory;
 import java.util.Random;
 
 /**
- * 演示通过 ”行解码器“ 的方案解决粘包、半包问题
- * ATTN
- * 缺点：效率较低
+ * <h2>粘包半包解决方案3-行解码器(客户端)</h2>
+ * <pre>
+ * 缺点：需要扫描消息内容，效率较低
+ * </pre>
  */
 public class Client_行解码器 {
 
@@ -30,7 +31,13 @@ public class Client_行解码器 {
         System.out.println("finish");
     }
 
-    // 生成字符串，结尾加换行符
+    /**
+     * 辅助方法：生成字符串，结尾加换行符
+     *
+     * @param c
+     * @param len
+     * @return
+     */
     public static StringBuilder makeString(char c, int len) {
         StringBuilder sb = new StringBuilder(len + 2);
         for (int i = 0; i < len; i++) {
@@ -51,12 +58,12 @@ public class Client_行解码器 {
                 protected void initChannel(SocketChannel ch) {
                     ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
                     ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
-                        // 会在连接 channel 建立成功后，会触发 active 事件
                         @Override
                         public void channelActive(ChannelHandlerContext ctx) {
                             ByteBuf buf = ctx.alloc().buffer();
                             char c = '0';
                             Random r = new Random();
+                            // 发送10条随机长度的以"\n"结尾的字符串
                             for (int i = 0; i < 10; i++) {
                                 StringBuilder sb = makeString(c, r.nextInt(256) + 1);
                                 c++;

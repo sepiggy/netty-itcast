@@ -1,4 +1,4 @@
-package cn.itcast.netty_advanced.c2;
+package cn.itcast.netty_advanced.protocol;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -12,27 +12,30 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
- * 使用 Netty 实现 Redis 客户端
+ * <h2>使用Netty实现Redis客户端</h2>
+ * <pre>
+ * Redis协议格式:
+ * set name zhangsan
+ * *3
+ * $3
+ * set
+ * $4
+ * name
+ * $8
+ * zhangsan
+ * </pre>
  */
 @Slf4j
 public class TestRedis {
 
-    /*
-    Redis 协议格式
-    set name zhangsan
-    *3
-    $3
-    set
-    $4
-    name
-    $8
-    zhangsan
-     */
+    // 回车换行符
+    static final byte[] LINE = {13, 10};
+
     public static void main(String[] args) {
-        final byte[] LINE = {13, 10};
+
         NioEventLoopGroup worker = new NioEventLoopGroup();
         try {
             Bootstrap bootstrap = new Bootstrap();
@@ -45,6 +48,7 @@ public class TestRedis {
                     ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
                         @Override
                         public void channelActive(ChannelHandlerContext ctx) {
+                            // 向Redis发送命令: set name zhangsan
                             ByteBuf buf = ctx.alloc().buffer();
                             buf.writeBytes("*3".getBytes());
                             buf.writeBytes(LINE);
@@ -65,12 +69,15 @@ public class TestRedis {
 
                         @Override
                         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+                            // 接收Redis返回的结果
                             ByteBuf buf = (ByteBuf) msg;
-                            System.out.println(buf.toString(Charset.defaultCharset()));
+                            System.out.println(buf.toString(StandardCharsets.UTF_8));
                         }
                     });
                 }
             });
+
+            // 连接本地Redis服务端
             ChannelFuture channelFuture = bootstrap.connect("localhost", 6379).sync();
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
