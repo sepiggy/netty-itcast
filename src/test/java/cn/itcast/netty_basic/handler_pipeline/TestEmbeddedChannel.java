@@ -1,4 +1,4 @@
-package cn.itcast.netty_basic.future_promise;
+package cn.itcast.netty_basic.handler_pipeline;
 
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelHandlerContext;
@@ -9,10 +9,14 @@ import io.netty.channel.embedded.EmbeddedChannel;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 使用 EmbeddedChannel 可以对 Channel 进行调试
+ * <h2>使用EmbeddedChannel调试Handler</h2>
+ * <pre>
+ * 不用编写完整的服务端和客户端就可以对Handler的执行顺序进行调试
+ * </pre>
  */
 @Slf4j
 public class TestEmbeddedChannel {
+
     public static void main(String[] args) {
         ChannelInboundHandlerAdapter h1 = new ChannelInboundHandlerAdapter() {
             @Override
@@ -42,11 +46,14 @@ public class TestEmbeddedChannel {
                 super.write(ctx, msg, promise);
             }
         };
+
         EmbeddedChannel channel = new EmbeddedChannel(h1, h2, h3, h4);
+
         // 模拟入站操作
 //        channel.writeInbound(ByteBufAllocator.DEFAULT.buffer().writeBytes("hello".getBytes()));
+
         // 模拟出站操作
         channel.writeOutbound(ByteBufAllocator.DEFAULT.buffer().writeBytes("world".getBytes()));
-
     }
+
 }

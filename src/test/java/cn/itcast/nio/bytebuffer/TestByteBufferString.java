@@ -1,9 +1,9 @@
-package cn.itcast.nio.c2;
+package cn.itcast.nio.bytebuffer;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
+import static cn.itcast.nio.bytebuffer.ByteBufferUtil.debugAll;
 
 /**
  * ByteBuffer与字符串之间的相互转换

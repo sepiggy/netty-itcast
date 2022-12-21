@@ -10,7 +10,7 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.itcast.nio.c2.ByteBufferUtil.debugRead;
+import static cn.itcast.nio.bytebuffer.ByteBufferUtil.debugRead;
 
 /**
  * 使用"NIO+单线程"来理解非阻塞模式

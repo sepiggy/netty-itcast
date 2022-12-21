@@ -9,7 +9,7 @@ import java.nio.channels.CompletionHandler;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
+import static cn.itcast.nio.bytebuffer.ByteBufferUtil.debugAll;
 
 /**
  * 使用异步IO读取文件

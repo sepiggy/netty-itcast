@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?> 
  <trees>
-     <tree path="/src/test/java/cn/itcast/nio/c2" title="ByteBuffer详解"/>
-     <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBuffer.java" title="p006-ByteBuffer和FileChannel的基本使用-读取文件"
+     <tree path="/src/test/java/cn/itcast/nio/bytebuffer" title="ByteBuffer详解"/>
+     <tree path="/src/test/java/cn/itcast/nio/bytebuffer/TestByteBuffer.java" title="p006-ByteBuffer和FileChannel的基本使用-读取文件"
            extension="java"/>
-     <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBuffer_01.java" title="p006-ByteBuffer和FileChannel的基本使用-读取文件（优化版）"
+     <tree path="/src/test/java/cn/itcast/nio/bytebuffer/TestByteBuffer_01.java" title="p006-ByteBuffer和FileChannel的基本使用-读取文件（优化版）"
            extension="java"/>
-     <tree path="/src/test/java/cn/itcast/nio/c2/ByteBufferUtil.java" title="p008-ByteBuffer调试工具类" extension="java"/>
-     <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferReadWrite.java" title="p008-ByteBuffer读写模式切换"
+     <tree path="/src/test/java/cn/itcast/nio/bytebuffer/ByteBufferUtil.java" title="p008-ByteBuffer调试工具类" extension="java"/>
+     <tree path="/src/test/java/cn/itcast/nio/bytebuffer/TestByteBufferReadWrite.java" title="p008-ByteBuffer读写模式切换"
            extension="java"/>
-     <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferAllocate.java" title="p009-ByteBuffer分配的两种方式比较"
+     <tree path="/src/test/java/cn/itcast/nio/bytebuffer/TestByteBufferAllocate.java" title="p009-ByteBuffer分配的两种方式比较"
            extension="java"/>
-     <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferRead.java" title="p010-ByteBuffer与读取相关的方法"
+     <tree path="/src/test/java/cn/itcast/nio/bytebuffer/TestByteBufferRead.java" title="p010-ByteBuffer与读取相关的方法"
            extension="java"/>
-    <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferString.java" title="p011-ByteBuffer与字符串之间的相互转换"
+    <tree path="/src/test/java/cn/itcast/nio/bytebuffer/TestByteBufferString.java" title="p011-ByteBuffer与字符串之间的相互转换"
           extension="java"/>
-    <tree path="/src/test/java/cn/itcast/nio/c2/TestGatheringWrites.java" title="p012-分散读集中写思想" extension="java"/>
-    <tree path="/src/test/java/cn/itcast/nio/c2/TestScatteringReads.java" title="p012-分散读集中写思想" extension="java"/>
-    <tree path="/src/test/java/cn/itcast/nio/c2/TestByteBufferExam.java" title="p013-p014-ByteBuffer综合练习"
+    <tree path="/src/test/java/cn/itcast/nio/bytebuffer/TestGatheringWrites.java" title="p012-分散读集中写思想" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/bytebuffer/TestScatteringReads.java" title="p012-分散读集中写思想" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/nio/bytebuffer/TestByteBufferExam.java" title="p013-p014-ByteBuffer综合练习"
           extension="java"/>
     <tree path="/src/test/java/cn/itcast/nio/c3" title="文件编程"/>
     <tree path="/src/test/java/cn/itcast/nio/c3/TestFileChannelTransferTo.java" title="P016-两个Channel传输数据"
@@ -84,5 +84,7 @@
           title="p076-Handler和Pipeline演示的服务端之入站处理器" extension="java"/>
     <tree path="/src/test/java/cn/itcast/netty_basic/handler_pipeline/TestPipelineServer_2.java"
           title="p077-Handler和Pipeline演示的服务端之出站处理器" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_basic/handler_pipeline/TestEmbeddedChannel.java"
+          title="p078-使用EmbeddedChannel调试Handler" extension="java"/>
     extension="java"/>
 </trees>

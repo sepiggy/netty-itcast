@@ -1,4 +1,4 @@
-package cn.itcast.nio.c2;
+package cn.itcast.nio.bytebuffer;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 
-import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
+import static cn.itcast.nio.bytebuffer.ByteBufferUtil.debugAll;
 
 /**
  * 掌握集中写入的思想: 减少ByteBuffer之间数据的拷贝，提高效率

@@ -1,8 +1,8 @@
-package cn.itcast.nio.c2;
+package cn.itcast.nio.bytebuffer;
 
 import java.nio.ByteBuffer;
 
-import static cn.itcast.nio.c2.ByteBufferUtil.debugAll;
+import static cn.itcast.nio.bytebuffer.ByteBufferUtil.debugAll;
 
 /**
  * ByteBuffer与读取相关的方法

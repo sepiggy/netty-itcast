@@ -13,6 +13,13 @@ import java.nio.charset.StandardCharsets;
  * <h2>Handler和Pipeline演示的服务端</h2>
  * <h3>关于出站处理器的说明</h3>
  * <pre>
+ * 1) "ChannelHandlerContext#writeAndFlush"与"Channel#writeAndFlush"的区别：
+ *    前者是从当前Handler节点向前找出站处理器，而后者是从tail节点向前找出站处理器
+ * 运行结果：
+ * 13:51:19 [DEBUG] [nioEventLoopGroup-2-2] c.i.n.h.TestPipelineServer_2: 49 - 1
+ * 13:51:19 [DEBUG] [nioEventLoopGroup-2-2] c.i.n.h.TestPipelineServer_2: 59 - 2
+ * 13:51:19 [DEBUG] [nioEventLoopGroup-2-2] c.i.n.h.TestPipelineServer_2: 69 - 3
+ * 13:51:19 [DEBUG] [nioEventLoopGroup-2-2] c.i.n.h.TestPipelineServer_2: 80 - 4
  * </pre>
  */
 @Slf4j
@@ -31,8 +38,8 @@ public class TestPipelineServer_2 {
 
                         pipeline.addLast("h1", new H1InboundHandler());
                         pipeline.addLast("h2", new H2InboundHandler());
-                        pipeline.addLast("h3", new H3InboundHandler());
                         pipeline.addLast("h4", new H4OutboundHandler());
+                        pipeline.addLast("h3", new H3InboundHandler());
                         pipeline.addLast("h5", new H5OutboundHandler());
                         pipeline.addLast("h6", new H6OutboundHandler());
                     }

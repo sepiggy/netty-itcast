@@ -1,4 +1,4 @@
-package cn.itcast.nio.c2;
+package cn.itcast.nio.bytebuffer;
 
 import lombok.extern.slf4j.Slf4j;
 
