@@ -6,11 +6,15 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 所有消息的抽象父类
+ */
 @Data
 public abstract class Message implements Serializable {
 
     /**
      * 根据消息类型字节，获得对应的消息 class
+     *
      * @param messageType 消息类型字节
      * @return 消息 class
      */
@@ -47,7 +51,7 @@ public abstract class Message implements Serializable {
     /**
      * 响应类型 byte 值
      */
-    public static final int  RPC_MESSAGE_TYPE_RESPONSE = 102;
+    public static final int RPC_MESSAGE_TYPE_RESPONSE = 102;
 
     private static final Map<Integer, Class<? extends Message>> messageClasses = new HashMap<>();
 

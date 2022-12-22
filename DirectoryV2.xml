@@ -124,5 +124,9 @@
     <tree path="/src/test/java/cn/itcast/netty_advanced/protocol" title="协议的解析与设计"/>
     <tree path="/src/test/java/cn/itcast/netty_advanced/protocol/TestRedis.java" title="p099-使用Netty实现Redis客户端"
           extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_advanced/protocol/TestHttp.java" title="p100-使用Netty实现HTTP服务端"
+          extension="java"/>
+    <tree path="/src/main/java/cn/itcast/protocol/MessageCodec.java" title="p102-p103-自定义协议的设计与解析(自定义协议的编解码器的编写)" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/protocol/TestMessageCodec.java" title="p103-测试自定义协议的编解码器" extension="java"/>
     extension="java"/>
 </trees>
