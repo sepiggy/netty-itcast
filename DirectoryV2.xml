@@ -126,7 +126,19 @@
           extension="java"/>
     <tree path="/src/test/java/cn/itcast/netty_advanced/protocol/TestHttp.java" title="p100-使用Netty实现HTTP服务端"
           extension="java"/>
-    <tree path="/src/main/java/cn/itcast/protocol/MessageCodec.java" title="p102-p103-自定义协议的设计与解析(自定义协议的编解码器的编写)" extension="java"/>
-    <tree path="/src/main/java/cn/itcast/protocol/TestMessageCodec.java" title="p103-测试自定义协议的编解码器" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/chat/protocol/MessageCodec.java" title="p102-p103-自定义协议的设计与解析(自定义协议的编解码器的编写)" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/chat/protocol/TestMessageCodec.java" title="p103-测试自定义协议的编解码器" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/chat/protocol/MessageCodecSharable.java" title="p107-@Sharable注解说明"
+          extension="java"/>
+    <tree path="/src/main/java/cn/itcast/chat/server/session/Session.java" title="会话管理接口" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/chat/server/session/SessionMemoryImpl.java" title="基于内存实现的会话管理接口" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/chat/server/session/GroupSession.java" title="聊天组会话管理接口" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/chat" title="聊天室项目"/>
+    <tree path="/src/main/java/cn/itcast/chat/client" title="客户端代码"/>
+    <tree path="/src/main/java/cn/itcast/chat/message" title="客户端与服务端之间通信消息的封装"/>
+    <tree path="/src/main/java/cn/itcast/chat/protocol" title="客户端与服务端之间通信的协议和对应的编解码器"/>
+    <tree path="/src/main/java/cn/itcast/chat/server" title="服务端代码"/>
+    <tree path="/src/main/java/cn/itcast/chat/server/service" title="业务相关"/>
+    <tree path="/src/main/java/cn/itcast/chat/server/session" title="会话相关"/>
     extension="java"/>
 </trees>

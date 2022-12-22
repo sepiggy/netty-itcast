@@ -1,7 +1,7 @@
 package cn.itcast.test;
 
-import cn.itcast.server.service.HelloService;
-import cn.itcast.server.service.ServicesFactory;
+import cn.itcast.chat.server.service.HelloService;
+import cn.itcast.chat.server.service.ServicesFactory;
 
 public class TestServicesFactory {
     public static void main(String[] args) {

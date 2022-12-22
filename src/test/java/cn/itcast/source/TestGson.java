@@ -1,9 +1,7 @@
 package cn.itcast.source;
 
-import cn.itcast.protocol.Serializer;
+import cn.itcast.chat.protocol.Serializer;
 import com.google.gson.*;
-
-import java.lang.reflect.Type;
 
 public class TestGson {
     public static void main(String[] args) {
