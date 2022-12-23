@@ -1,10 +1,10 @@
 package cn.itcast.netty_basic.echo;
 
-import cn.itcast.chat.config.Config;
-import cn.itcast.chat.message.LoginRequestMessage;
-import cn.itcast.chat.message.Message;
-import cn.itcast.chat.protocol.MessageCodecSharable;
-import cn.itcast.chat.protocol.Serializer;
+import cn.itcast.im.config.Config;
+import cn.itcast.im.message.LoginRequestMessage;
+import cn.itcast.im.message.Message;
+import cn.itcast.im.protocol.MessageCodecSharable;
+import cn.itcast.im.protocol.Serializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.embedded.EmbeddedChannel;

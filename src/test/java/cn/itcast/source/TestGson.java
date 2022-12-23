@@ -1,6 +1,6 @@
 package cn.itcast.source;
 
-import cn.itcast.chat.protocol.Serializer;
+import cn.itcast.im.protocol.Serializer;
 import com.google.gson.*;
 
 public class TestGson {
