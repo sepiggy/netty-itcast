@@ -19,8 +19,12 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * <h2>聊天室服务端</h2>
+ */
 @Slf4j
 public class ChatServer {
+
     public static void main(String[] args) {
 
         NioEventLoopGroup boss = new NioEventLoopGroup();
@@ -54,12 +58,12 @@ public class ChatServer {
                     ch.pipeline().addLast(new ChannelDuplexHandler() {
                         // 用来触发特殊事件
                         @Override
-                        public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception{
+                        public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
                             IdleStateEvent event = (IdleStateEvent) evt;
                             // 触发了读空闲事件
                             if (event.state() == IdleState.READER_IDLE) {
-                                log.debug("已经 5s 没有读到数据了");
-                                ctx.channel().close();
+//                                log.debug("已经 5s 没有读到数据了");
+//                                ctx.channel().close();
                             }
                         }
                     });

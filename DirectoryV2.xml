@@ -142,5 +142,10 @@
     <tree path="/src/main/java/cn/itcast/im/server/session" title="会话相关"/>
     <tree path="/src/main/java/cn/itcast/im/protocol/ProcotolFrameDecoder.java" title="p109-封装一层帧解码器用于处理粘包、半包"
           extension="java"/>
+    <tree path="/netty-demo-练习初始代码.zip" title="p110-聊天室初始代码" extension="zip"/>
+    <tree path="/src/main/java/cn/itcast/im/message/LoginRequestMessage.java" title="p110-登录请求消息" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/im/message/LoginResponseMessage.java" title="p110-登录响应消息" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/im/server/handler/LoginRequestMessageHandler.java" title="p110-登录请求业务处理Handler"
+          extension="java"/>
     extension="java"/>
 </trees>

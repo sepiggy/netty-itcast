@@ -7,4 +7,5 @@ public abstract class UserServiceFactory {
     public static UserService getUserService() {
         return userService;
     }
+
 }
