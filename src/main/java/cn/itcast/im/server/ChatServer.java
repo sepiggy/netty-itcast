@@ -25,21 +25,24 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ChatServer {
 
+    /**
+     * 这里的Handler都是可共享的，作为成员变量，所有的Channel共享同一个Handler实例
+     */
+    private static final LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
+    private static final MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
+    private static final LoginRequestMessageHandler LOGIN_HANDLER = new LoginRequestMessageHandler();
+    private static final ChatRequestMessageHandler CHAT_HANDLER = new ChatRequestMessageHandler();
+    private static final GroupCreateRequestMessageHandler GROUP_CREATE_HANDLER = new GroupCreateRequestMessageHandler();
+    private static final GroupJoinRequestMessageHandler GROUP_JOIN_HANDLER = new GroupJoinRequestMessageHandler();
+    private static final GroupMembersRequestMessageHandler GROUP_MEMBERS_HANDLER = new GroupMembersRequestMessageHandler();
+    private static final GroupQuitRequestMessageHandler GROUP_QUIT_HANDLER = new GroupQuitRequestMessageHandler();
+    private static final GroupChatRequestMessageHandler GROUP_CHAT_HANDLER = new GroupChatRequestMessageHandler();
+    private static final QuitHandler QUIT_HANDLER = new QuitHandler();
+
     public static void main(String[] args) {
 
         NioEventLoopGroup boss = new NioEventLoopGroup();
         NioEventLoopGroup worker = new NioEventLoopGroup();
-
-        LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
-        MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
-        LoginRequestMessageHandler LOGIN_HANDLER = new LoginRequestMessageHandler();
-        ChatRequestMessageHandler CHAT_HANDLER = new ChatRequestMessageHandler();
-        GroupCreateRequestMessageHandler GROUP_CREATE_HANDLER = new GroupCreateRequestMessageHandler();
-        GroupJoinRequestMessageHandler GROUP_JOIN_HANDLER = new GroupJoinRequestMessageHandler();
-        GroupMembersRequestMessageHandler GROUP_MEMBERS_HANDLER = new GroupMembersRequestMessageHandler();
-        GroupQuitRequestMessageHandler GROUP_QUIT_HANDLER = new GroupQuitRequestMessageHandler();
-        GroupChatRequestMessageHandler GROUP_CHAT_HANDLER = new GroupChatRequestMessageHandler();
-        QuitHandler QUIT_HANDLER = new QuitHandler();
 
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();

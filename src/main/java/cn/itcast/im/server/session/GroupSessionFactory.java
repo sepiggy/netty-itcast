@@ -7,4 +7,5 @@ public abstract class GroupSessionFactory {
     public static GroupSession getGroupSession() {
         return session;
     }
+
 }

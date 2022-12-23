@@ -7,6 +7,7 @@ import cn.itcast.im.server.session.SessionFactory;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
  * </pre>
  */
 @ChannelHandler.Sharable
+@Slf4j
 public class LoginRequestMessageHandler extends SimpleChannelInboundHandler<LoginRequestMessage> {
 
     @Override
@@ -34,7 +36,7 @@ public class LoginRequestMessageHandler extends SimpleChannelInboundHandler<Logi
             SessionFactory.getSession().bind(ctx.channel(), username);
             message = new LoginResponseMessage(true, "登录成功");
             List<String> onlineUsernames = SessionFactory.getSession().getOnlineUsernames();
-            System.out.printf("当前所有在线用户: %s\n", onlineUsernames.stream().collect(Collectors.joining(",", "[", "]")));
+            log.debug("当前所有在线用户: %s\n", onlineUsernames.stream().collect(Collectors.joining(",", "[", "]")));
         } else {
             message = new LoginResponseMessage(false, "用户名或密码不正确");
         }

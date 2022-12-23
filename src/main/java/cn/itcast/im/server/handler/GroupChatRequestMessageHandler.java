@@ -10,15 +10,20 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.List;
 
+/**
+ * <h2>发送群聊消息处理器</h2>
+ */
 @ChannelHandler.Sharable
 public class GroupChatRequestMessageHandler extends SimpleChannelInboundHandler<GroupChatRequestMessage> {
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, GroupChatRequestMessage msg) throws Exception {
-        List<Channel> channels = GroupSessionFactory.getGroupSession()
-                .getMembersChannel(msg.getGroupName());
 
+        // 获取群聊的所有对应Channel
+        List<Channel> channels = GroupSessionFactory.getGroupSession().getMembersChannel(msg.getGroupName());
         for (Channel channel : channels) {
             channel.writeAndFlush(new GroupChatResponseMessage(msg.getFrom(), msg.getContent()));
         }
     }
+
 }

@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class GroupSessionMemoryImpl implements GroupSession {
+
     private final Map<String, Group> groupMap = new ConcurrentHashMap<>();
 
     @Override
@@ -51,4 +52,5 @@ public class GroupSessionMemoryImpl implements GroupSession {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
+
 }

@@ -147,5 +147,12 @@
     <tree path="/src/main/java/cn/itcast/im/message/LoginResponseMessage.java" title="p110-登录响应消息" extension="java"/>
     <tree path="/src/main/java/cn/itcast/im/server/handler/LoginRequestMessageHandler.java" title="p110-登录请求业务处理Handler"
           extension="java"/>
+    <tree path="/src/main/java/cn/itcast/im/server/handler/ChatRequestMessageHandler.java" title="发送单聊消息处理器"
+          extension="java"/>
+    <tree path="/src/main/java/cn/itcast/im/server/handler/GroupChatRequestMessageHandler.java" title="发送群聊消息处理器"
+          extension="java"/>
+    <tree path="/src/main/java/cn/itcast/im/server/handler/GroupCreateRequestMessageHandler.java" title="创建群聊消息处理器"
+          extension="java"/>
+    <tree path="/src/main/java/cn/itcast/im/server/handler/QuitHandler.java" title="p116-退出处理器" extension="java"/>
     extension="java"/>
 </trees>
