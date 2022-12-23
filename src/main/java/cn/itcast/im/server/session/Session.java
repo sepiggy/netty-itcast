@@ -2,6 +2,8 @@ package cn.itcast.im.server.session;
 
 import io.netty.channel.Channel;
 
+import java.util.List;
+
 /**
  * <h2>会话管理接口</h2>
  */
@@ -47,5 +49,12 @@ public interface Session {
      * @return channel
      */
     Channel getChannel(String username);
+
+    /**
+     * 获取当前在线用户列表
+     *
+     * @return
+     */
+    List<String> getOnlineUsernames();
 
 }

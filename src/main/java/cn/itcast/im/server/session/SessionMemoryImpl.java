@@ -2,6 +2,8 @@ package cn.itcast.im.server.session;
 
 import io.netty.channel.Channel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -46,6 +48,11 @@ public class SessionMemoryImpl implements Session {
     @Override
     public String toString() {
         return usernameChannelMap.toString();
+    }
+
+    @Override
+    public List<String> getOnlineUsernames() {
+        return new ArrayList<>(usernameChannelMap.keySet());
     }
 
 }

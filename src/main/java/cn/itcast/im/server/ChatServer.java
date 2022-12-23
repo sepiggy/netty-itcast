@@ -52,9 +52,10 @@ public class ChatServer {
                     ch.pipeline().addLast(LOGGING_HANDLER);
                     ch.pipeline().addLast(MESSAGE_CODEC);
                     // 用来判断是不是 读空闲时间过长，或 写空闲时间过长
-                    // 5s 内如果没有收到 channel 的数据，会触发一个 IdleState#READER_IDLE 事件
-                    ch.pipeline().addLast(new IdleStateHandler(5, 0, 0));
+                    // 120s内如果没有收到Channel的数据，会触发一个IdleState#READER_IDLE事件
+//                    ch.pipeline().addLast(new IdleStateHandler(120, 0, 0));
                     // ChannelDuplexHandler 可以同时作为入站和出站处理器
+/*
                     ch.pipeline().addLast(new ChannelDuplexHandler() {
                         // 用来触发特殊事件
                         @Override
@@ -67,6 +68,7 @@ public class ChatServer {
                             }
                         }
                     });
+*/
                     ch.pipeline().addLast(LOGIN_HANDLER);
                     ch.pipeline().addLast(CHAT_HANDLER);
                     ch.pipeline().addLast(GROUP_CREATE_HANDLER);

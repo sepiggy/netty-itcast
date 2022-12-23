@@ -23,4 +23,5 @@ public class ChatResponseMessage extends AbstractResponseMessage {
     public int getMessageType() {
         return ChatResponseMessage;
     }
+
 }

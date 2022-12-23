@@ -7,6 +7,10 @@ import cn.itcast.im.server.session.SessionFactory;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.val;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <h2>登录请求业务处理Handler</h2>
@@ -26,8 +30,11 @@ public class LoginRequestMessageHandler extends SimpleChannelInboundHandler<Logi
         // 登录响应消息
         LoginResponseMessage message;
         if (login) {
+            // 保存会话信息，绑定Session和用户名
             SessionFactory.getSession().bind(ctx.channel(), username);
             message = new LoginResponseMessage(true, "登录成功");
+            List<String> onlineUsernames = SessionFactory.getSession().getOnlineUsernames();
+            System.out.printf("当前所有在线用户: %s\n", onlineUsernames.stream().collect(Collectors.joining(",", "[", "]")));
         } else {
             message = new LoginResponseMessage(false, "用户名或密码不正确");
         }
