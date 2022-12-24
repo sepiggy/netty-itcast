@@ -1,6 +1,6 @@
-package cn.itcast.im.client.handler;
+package cn.itcast.rpc.client.handler;
 
-import cn.itcast.im.message.RpcResponseMessage;
+import cn.itcast.rpc.message.RpcResponseMessage;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

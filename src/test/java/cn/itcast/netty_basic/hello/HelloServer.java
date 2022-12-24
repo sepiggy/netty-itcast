@@ -25,7 +25,7 @@ public class HelloServer {
         new ServerBootstrap()
                 // 2. NIO事件循环组
                 /**
-                 * EventLoopGroup对应NIO网络编程中的选择器(Selector)+线程(Thread) {@link cn.itcast.nio.c4.Server_06}
+                 * EventLoopGroup对应NIO网络编程中的选择器(Selector)+线程(Thread) {@link cn.itcast.nio.sockets.Server_06}
                  * 一个NioEventLoopGroup由一个BossEventLoop和多个WorkerEventLoop组成
                  * 一个EventLoop由一个Selector和一个Thread组成
                  * 一个EventLoopGroup由多个EventLoop组成

@@ -1,10 +1,10 @@
 package cn.itcast.rpc.client;
 
-import cn.itcast.im.client.handler.RpcResponseMessageHandler;
-import cn.itcast.im.message.RpcRequestMessage;
-import cn.itcast.im.protocol.MessageCodecSharable;
-import cn.itcast.im.protocol.ProcotolFrameDecoder;
-import cn.itcast.im.protocol.SequenceIdGenerator;
+import cn.itcast.rpc.client.handler.RpcResponseMessageHandler;
+import cn.itcast.rpc.message.RpcRequestMessage;
+import cn.itcast.rpc.protocol.MessageCodecSharable;
+import cn.itcast.rpc.protocol.ProcotolFrameDecoder;
+import cn.itcast.rpc.protocol.SequenceIdGenerator;
 import cn.itcast.rpc.service.HelloService;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;

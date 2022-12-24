@@ -1,6 +1,6 @@
 package cn.itcast.rpc.config;
 
-import cn.itcast.im.protocol.Serializer;
+import cn.itcast.rpc.protocol.Serializer;
 
 import java.io.IOException;
 import java.io.InputStream;

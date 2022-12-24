@@ -1,4 +1,4 @@
-package cn.itcast.nio.c5;
+package cn.itcast.nio.io_model;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,6 +1,6 @@
 package cn.itcast.rpc.client;
 
-import cn.itcast.im.client.handler.RpcResponseMessageHandler;
+import cn.itcast.rpc.client.handler.RpcResponseMessageHandler;
 import cn.itcast.rpc.message.RpcRequestMessage;
 import cn.itcast.rpc.protocol.MessageCodecSharable;
 import cn.itcast.rpc.protocol.ProcotolFrameDecoder;

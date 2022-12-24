@@ -1,7 +1,7 @@
 package cn.itcast.rpc.protocol;
 
-import cn.itcast.im.config.Config;
-import cn.itcast.im.message.Message;
+import cn.itcast.rpc.config.Config;
+import cn.itcast.rpc.message.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
