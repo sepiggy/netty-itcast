@@ -52,13 +52,12 @@ public class ChatServer {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
                     ch.pipeline().addLast(new ProcotolFrameDecoder());
-                    ch.pipeline().addLast(LOGGING_HANDLER);
-                    ch.pipeline().addLast(MESSAGE_CODEC);
-                    // 用来判断是不是 读空闲时间过长，或 写空闲时间过长
-                    // 120s内如果没有收到Channel的数据，会触发一个IdleState#READER_IDLE事件
-//                    ch.pipeline().addLast(new IdleStateHandler(120, 0, 0));
-                    // ChannelDuplexHandler 可以同时作为入站和出站处理器
-/*
+                    // 处理连接假死问题
+                    // 用来判断是不是读空闲时间过长，或写空闲时间过长
+                    // 10s内如果没有收到Channel的数据，会触发一个IdleState#READER_IDLE事件
+                    ch.pipeline().addLast(new IdleStateHandler(10, 0, 0));
+                    // 自定义Handler处理IdleState#READER_IDLE事件
+                    // ChannelDuplexHandler可以同时作为入站和出站处理器
                     ch.pipeline().addLast(new ChannelDuplexHandler() {
                         // 用来触发特殊事件
                         @Override
@@ -66,12 +65,16 @@ public class ChatServer {
                             IdleStateEvent event = (IdleStateEvent) evt;
                             // 触发了读空闲事件
                             if (event.state() == IdleState.READER_IDLE) {
-//                                log.debug("已经 5s 没有读到数据了");
-//                                ctx.channel().close();
+                                log.debug("已经10s没有读到数据了");
+                                // 释放连接
+                                ctx.channel().close();
                             }
                         }
                     });
-*/
+
+                    ch.pipeline().addLast(LOGGING_HANDLER);
+                    ch.pipeline().addLast(MESSAGE_CODEC);
+
                     ch.pipeline().addLast(LOGIN_HANDLER);
                     ch.pipeline().addLast(CHAT_HANDLER);
                     ch.pipeline().addLast(GROUP_CREATE_HANDLER);

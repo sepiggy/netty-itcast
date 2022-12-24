@@ -36,7 +36,7 @@ public class LoginRequestMessageHandler extends SimpleChannelInboundHandler<Logi
             SessionFactory.getSession().bind(ctx.channel(), username);
             message = new LoginResponseMessage(true, "登录成功");
             List<String> onlineUsernames = SessionFactory.getSession().getOnlineUsernames();
-            log.debug("当前所有在线用户: %s\n", onlineUsernames.stream().collect(Collectors.joining(",", "[", "]")));
+            log.debug("当前所有在线用户: {}", onlineUsernames.stream().collect(Collectors.joining(",", "[", "]")));
         } else {
             message = new LoginResponseMessage(false, "用户名或密码不正确");
         }
