@@ -161,5 +161,10 @@
     <tree path="/src/test/java/cn/itcast/im" title="聊天室相关代码"/>
     <tree path="/src/test/java/cn/itcast/netty_tuning/TestConnectionTimeout.java" title="p122-客户端连接建立超时参数"
           extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_tuning/TestBacklogServer.java" title="p125-服务端全连接队列参数" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_tuning/TestByteBufServer.java" title="p128-ALLOCATOR参数-p129-RCVBUF_ALLOCATOR参数" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_tuning/TestByteBufClient.java"
+          title="p128-ALLOCATOR参数-p129-RCVBUF_ALLOCATOR参数" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/rpc" title="RPC框架实现"/>
     extension="java"/>
 </trees>

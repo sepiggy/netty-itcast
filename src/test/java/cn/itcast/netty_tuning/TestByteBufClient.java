@@ -1,8 +1,6 @@
-package cn.itcast.source;
+package cn.itcast.netty_tuning;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -12,11 +10,10 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Slf4j
-public class TestBacklogClient {
+public class TestByteBufClient {
+
     public static void main(String[] args) {
         NioEventLoopGroup worker = new NioEventLoopGroup();
         try {
@@ -28,7 +25,7 @@ public class TestBacklogClient {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
                     ch.pipeline().addLast(new LoggingHandler());
-                    ch.pipeline().addLast(new ChannelInboundHandlerAdapter(){
+                    ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
                         @Override
                         public void channelActive(ChannelHandlerContext ctx) throws Exception {
                             ctx.writeAndFlush(ctx.alloc().buffer().writeBytes("hello!".getBytes()));
@@ -44,4 +41,5 @@ public class TestBacklogClient {
             worker.shutdownGracefully();
         }
     }
+
 }

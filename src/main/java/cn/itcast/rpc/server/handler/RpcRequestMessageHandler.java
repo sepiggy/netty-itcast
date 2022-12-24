@@ -1,8 +1,8 @@
-package cn.itcast.im.server.handler;
+package cn.itcast.rpc.server.handler;
 
 import cn.itcast.im.message.RpcRequestMessage;
 import cn.itcast.im.message.RpcResponseMessage;
-import cn.itcast.im.server.service.HelloService;
+import cn.itcast.rpc.service.HelloService;
 import cn.itcast.im.server.service.ServicesFactory;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -35,18 +35,20 @@ public class RpcRequestMessageHandler extends SimpleChannelInboundHandler<RpcReq
     }
 
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+
         RpcRequestMessage message = new RpcRequestMessage(
                 1,
-                "cn.itcast.server.service.HelloService",
+                "cn.itcast.rpc.service.HelloService",
                 "sayHello",
                 String.class,
                 new Class[]{String.class},
                 new Object[]{"张三"}
         );
-        HelloService service = (HelloService)
-                ServicesFactory.getService(Class.forName(message.getInterfaceName()));
+
+        HelloService service = (HelloService) ServicesFactory.getService(Class.forName(message.getInterfaceName()));
         Method method = service.getClass().getMethod(message.getMethodName(), message.getParameterTypes());
         Object invoke = method.invoke(service, message.getParameterValue());
         System.out.println(invoke);
     }
+
 }

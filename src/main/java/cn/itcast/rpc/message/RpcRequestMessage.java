@@ -1,4 +1,4 @@
-package cn.itcast.im.message;
+package cn.itcast.rpc.message;
 
 import lombok.Getter;
 import lombok.ToString;

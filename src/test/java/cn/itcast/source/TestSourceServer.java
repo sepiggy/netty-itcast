@@ -9,6 +9,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
 
 public class TestSourceServer {
+
     public static void main(String[] args) {
         new ServerBootstrap()
                 .group(new NioEventLoopGroup())
@@ -20,4 +21,5 @@ public class TestSourceServer {
                     }
                 }).bind(8080);
     }
+
 }

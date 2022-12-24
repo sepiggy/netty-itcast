@@ -1,11 +1,11 @@
-package cn.itcast.im.client;
+package cn.itcast.rpc.client;
 
 import cn.itcast.im.client.handler.RpcResponseMessageHandler;
 import cn.itcast.im.message.RpcRequestMessage;
 import cn.itcast.im.protocol.MessageCodecSharable;
 import cn.itcast.im.protocol.ProcotolFrameDecoder;
 import cn.itcast.im.protocol.SequenceIdGenerator;
-import cn.itcast.im.server.service.HelloService;
+import cn.itcast.rpc.service.HelloService;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -21,7 +21,6 @@ import java.lang.reflect.Proxy;
 
 @Slf4j
 public class RpcClientManager {
-
 
     public static void main(String[] args) {
         HelloService service = getProxyService(HelloService.class);
@@ -59,7 +58,7 @@ public class RpcClientManager {
 
             // 4. 等待 promise 结果
             promise.await();
-            if(promise.isSuccess()) {
+            if (promise.isSuccess()) {
                 // 调用正常
                 return promise.getNow();
             } else {
@@ -114,4 +113,5 @@ public class RpcClientManager {
             log.error("client error", e);
         }
     }
+
 }

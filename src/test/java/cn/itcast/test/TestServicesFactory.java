@@ -1,6 +1,6 @@
 package cn.itcast.test;
 
-import cn.itcast.im.server.service.HelloService;
+import cn.itcast.rpc.service.HelloService;
 import cn.itcast.im.server.service.ServicesFactory;
 
 public class TestServicesFactory {

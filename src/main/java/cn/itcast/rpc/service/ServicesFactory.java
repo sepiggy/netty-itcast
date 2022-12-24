@@ -1,6 +1,6 @@
-package cn.itcast.im.server.service;
+package cn.itcast.rpc.service;
 
-import cn.itcast.im.config.Config;
+import cn.itcast.rpc.config.Config;
 
 import java.io.IOException;
 import java.io.InputStream;
