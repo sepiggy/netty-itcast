@@ -1,4 +1,4 @@
-package cn.itcast.netty_basic.echo;
+package cn.itcast.im;
 
 import cn.itcast.im.config.Config;
 import cn.itcast.im.message.LoginRequestMessage;
@@ -12,13 +12,16 @@ import io.netty.handler.logging.LoggingHandler;
 
 public class TestSerializer {
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         MessageCodecSharable CODEC = new MessageCodecSharable();
         LoggingHandler LOGGING = new LoggingHandler();
         EmbeddedChannel channel = new EmbeddedChannel(LOGGING, CODEC, LOGGING);
 
+        // 测试序列化
         LoginRequestMessage message = new LoginRequestMessage("zhangsan", "123");
 //        channel.writeOutbound(message);
+
+        // 测试反序列化
         ByteBuf buf = messageToByteBuf(message);
         channel.writeInbound(buf);
     }
@@ -37,4 +40,5 @@ public class TestSerializer {
         out.writeBytes(bytes);
         return out;
     }
+
 }

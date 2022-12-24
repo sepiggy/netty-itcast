@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 用于扩展序列化、反序列化算法
+ * <h2>用于扩展序列化、反序列化算法</h2>
  */
 public interface Serializer {
 
@@ -17,6 +17,7 @@ public interface Serializer {
     // 序列化方法
     <T> byte[] serialize(T object);
 
+    // 序列化算法枚举
     enum Algorithm implements Serializer {
 
         Java {
@@ -59,6 +60,7 @@ public interface Serializer {
             }
         }
     }
+
     class ClassCodec implements JsonSerializer<Class<?>>, JsonDeserializer<Class<?>> {
 
         @Override
@@ -76,5 +78,7 @@ public interface Serializer {
             // class -> json
             return new JsonPrimitive(src.getName());
         }
+
     }
+
 }

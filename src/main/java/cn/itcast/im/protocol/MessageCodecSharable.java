@@ -28,7 +28,8 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
         out.writeBytes(new byte[]{1, 2, 3, 4});
         // 2) 1字节的版本,
         out.writeByte(1);
-        // 3) 1字节的序列化方式 jdk 0 , json 1
+        // 3) 1字节的序列化方式: jdk-0 , json-1
+        // 从配置文件读取选择的序列化算法
         out.writeByte(Config.getSerializerAlgorithm().ordinal());
         // 4) 1字节的指令类型
         out.writeByte(msg.getMessageType());

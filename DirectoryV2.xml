@@ -154,5 +154,12 @@
     <tree path="/src/main/java/cn/itcast/im/server/handler/GroupCreateRequestMessageHandler.java" title="创建群聊消息处理器"
           extension="java"/>
     <tree path="/src/main/java/cn/itcast/im/server/handler/QuitHandler.java" title="p116-退出处理器" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/im/protocol/Serializer.java" title="p119-扩展序列化算法" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/im/config" title="配置类"/>
+    <tree path="/src/test/java/cn/itcast/im/TestSerializer.java" title="p121-测试序列化算法" extension="java"/>
+    <tree path="/src/test/java/cn/itcast/netty_tuning" title="Netty调优"/>
+    <tree path="/src/test/java/cn/itcast/im" title="聊天室相关代码"/>
+    <tree path="/src/test/java/cn/itcast/netty_tuning/TestConnectionTimeout.java" title="p122-客户端连接建立超时参数"
+          extension="java"/>
     extension="java"/>
 </trees>
