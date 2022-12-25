@@ -18,7 +18,6 @@ public class RpcResponseMessageHandler extends SimpleChannelInboundHandler<RpcRe
     public static final Map<Integer, Promise<Object>> PROMISES = new ConcurrentHashMap<>();
 
     @Override
-
     protected void channelRead0(ChannelHandlerContext ctx, RpcResponseMessage msg) throws Exception {
         log.debug("{}", msg);
         // 拿到空的 promise
@@ -26,11 +25,12 @@ public class RpcResponseMessageHandler extends SimpleChannelInboundHandler<RpcRe
         if (promise != null) {
             Object returnValue = msg.getReturnValue();
             Exception exceptionValue = msg.getExceptionValue();
-            if(exceptionValue != null) {
+            if (exceptionValue != null) {
                 promise.setFailure(exceptionValue);
             } else {
                 promise.setSuccess(returnValue);
             }
         }
     }
+
 }

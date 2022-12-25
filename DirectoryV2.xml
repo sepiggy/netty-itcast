@@ -166,5 +166,7 @@
     <tree path="/src/test/java/cn/itcast/netty_tuning/TestByteBufClient.java"
           title="p128-ALLOCATOR参数-p129-RCVBUF_ALLOCATOR参数" extension="java"/>
     <tree path="/src/main/java/cn/itcast/rpc" title="RPC框架实现"/>
+    <tree path="/src/main/java/cn/itcast/rpc/client/RpcClient.java" title="p133-RPC客户端" extension="java"/>
+    <tree path="/src/main/java/cn/itcast/rpc/client/RpcClientManager.java" title="p133-RPC客户端(升级版)" extension="java"/>
     extension="java"/>
 </trees>

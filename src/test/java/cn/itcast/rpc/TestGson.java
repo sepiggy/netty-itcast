@@ -1,4 +1,4 @@
-package cn.itcast.source;
+package cn.itcast.rpc;
 
 import cn.itcast.im.protocol.Serializer;
 import com.google.gson.*;

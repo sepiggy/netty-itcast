@@ -61,21 +61,24 @@ public interface Serializer {
         }
     }
 
+    // Gson的Class类型转换器
     class ClassCodec implements JsonSerializer<Class<?>>, JsonDeserializer<Class<?>> {
 
         @Override
         public Class<?> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             try {
                 String str = json.getAsString();
+                // 根据全限定名称返回Class对象
                 return Class.forName(str);
             } catch (ClassNotFoundException e) {
                 throw new JsonParseException(e);
             }
         }
 
-        @Override             //   String.class
+        @Override             // String.class
         public JsonElement serialize(Class<?> src, Type typeOfSrc, JsonSerializationContext context) {
             // class -> json
+            // Class对象序列化方式是其全限定名称
             return new JsonPrimitive(src.getName());
         }
 

@@ -19,13 +19,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RpcServer {
 
+    // 既是入站处理器也是出站处理器
+    private static final LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
+    // 既是入站处理器也是出站处理器
+    private static final MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
+    // 入站处理器
+    private static final RpcRequestMessageHandler RPC_HANDLER = new RpcRequestMessageHandler();
+
     public static void main(String[] args) {
 
         NioEventLoopGroup boss = new NioEventLoopGroup();
         NioEventLoopGroup worker = new NioEventLoopGroup();
-        LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
-        MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
-        RpcRequestMessageHandler RPC_HANDLER = new RpcRequestMessageHandler();
 
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();

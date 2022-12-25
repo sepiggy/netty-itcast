@@ -19,6 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Proxy;
 
+/**
+ * <h2>RPC客户端(升级版)</h2>
+ * <pre>
+ * </pre>
+ */
 @Slf4j
 public class RpcClientManager {
 
@@ -72,12 +77,15 @@ public class RpcClientManager {
     private static Channel channel = null;
     private static final Object LOCK = new Object();
 
-    // 获取唯一的 channel 对象
+    // 获取唯一的Channel对象
+    // Channel对象只有一个，只会被初始化一次
+    // 不同的RPC请求共享一个Channel即可
     public static Channel getChannel() {
         if (channel != null) {
             return channel;
         }
-        synchronized (LOCK) { //  t2
+        // double-check
+        synchronized (LOCK) { // t2
             if (channel != null) { // t1
                 return channel;
             }
@@ -86,12 +94,15 @@ public class RpcClientManager {
         }
     }
 
-    // 初始化 channel 方法
+    // 初始化Channel方法
     private static void initChannel() {
+
         NioEventLoopGroup group = new NioEventLoopGroup();
+
         LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
         MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
         RpcResponseMessageHandler RPC_HANDLER = new RpcResponseMessageHandler();
+
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.channel(NioSocketChannel.class);
         bootstrap.group(group);
@@ -105,7 +116,9 @@ public class RpcClientManager {
             }
         });
         try {
+            // 同步等待Channel建立完毕
             channel = bootstrap.connect("localhost", 8080).sync().channel();
+            // 异步添加Channel关闭逻辑
             channel.closeFuture().addListener(future -> {
                 group.shutdownGracefully();
             });
