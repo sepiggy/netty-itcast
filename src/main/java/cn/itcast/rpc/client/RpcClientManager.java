@@ -22,25 +22,46 @@ import java.lang.reflect.Proxy;
 /**
  * <h2>RPC客户端(升级版)</h2>
  * <pre>
+ * 1) 复用Channel，每个RPC请求都共用一个Channel，将获取Channel和发送RPC请求解耦
+ * 2) 优化调用方式，添加代理类，自动封装消息对象
  * </pre>
  */
 @Slf4j
 public class RpcClientManager {
 
+    // 打印日志处理器 (入站 + 出站)
+    private static final LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
+    // 自定义消息解码器 (入站 + 出站)
+    private static final MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
+    // RPC消息响应处理器 (入站)
+    private static final RpcResponseMessageHandler RPC_HANDLER = new RpcResponseMessageHandler();
+    private static Channel channel = null;
+    private static final Object LOCK = new Object();
+
     public static void main(String[] args) {
+        // 获取代理对象
         HelloService service = getProxyService(HelloService.class);
-        System.out.println(service.sayHello("zhangsan"));
-//        System.out.println(service.sayHello("lisi"));
-//        System.out.println(service.sayHello("wangwu"));
+        // 通过RPC调用方法
+        String result = service.sayHello("zhangsan");
+        System.out.println("result = " + result);
     }
 
-    // 创建代理类
+    /**
+     * 创建serviceClass接口代理实现对象
+     * 将方法调用转换成RPC请求消息
+     *
+     * @param serviceClass
+     * @param <T>
+     * @return
+     */
     public static <T> T getProxyService(Class<T> serviceClass) {
+        // 获取接口类型的类加载器
         ClassLoader loader = serviceClass.getClassLoader();
+        // 代理类要实现的接口
         Class<?>[] interfaces = new Class[]{serviceClass};
-        //                                                            sayHello  "张三"
+        // JDK代理
         Object o = Proxy.newProxyInstance(loader, interfaces, (proxy, method, args) -> {
-            // 1. 将方法调用转换为 消息对象
+            // 1. 将方法调用转换为RpcRequestMessage消息对象
             int sequenceId = SequenceIdGenerator.nextId();
             RpcRequestMessage msg = new RpcRequestMessage(
                     sequenceId,
@@ -53,15 +74,18 @@ public class RpcClientManager {
             // 2. 将消息对象发送出去
             getChannel().writeAndFlush(msg);
 
-            // 3. 准备一个空 Promise 对象，来接收结果             指定 promise 对象异步接收结果线程
+            // 3. 主线程准备一个空Promise对象来等待NioEventLoop线程塞入结果(参数：指定Promise对象异步接收结果的线程)
             DefaultPromise<Object> promise = new DefaultPromise<>(getChannel().eventLoop());
             RpcResponseMessageHandler.PROMISES.put(sequenceId, promise);
 
-//            promise.addListener(future -> {
-//                // 线程
-//            });
+            // 这种获取结果方式也可
+            /*
+            promise.addListener(future -> {
+                // 这里接收结果的线程是构造DefaultPromise对象时传入的线程
+            });
+            */
 
-            // 4. 等待 promise 结果
+            // 4. 等待Promise结果
             promise.await();
             if (promise.isSuccess()) {
                 // 调用正常
@@ -73,9 +97,6 @@ public class RpcClientManager {
         });
         return (T) o;
     }
-
-    private static Channel channel = null;
-    private static final Object LOCK = new Object();
 
     // 获取唯一的Channel对象
     // Channel对象只有一个，只会被初始化一次
@@ -98,10 +119,6 @@ public class RpcClientManager {
     private static void initChannel() {
 
         NioEventLoopGroup group = new NioEventLoopGroup();
-
-        LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
-        MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
-        RpcResponseMessageHandler RPC_HANDLER = new RpcResponseMessageHandler();
 
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.channel(NioSocketChannel.class);

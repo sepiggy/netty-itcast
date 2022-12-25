@@ -32,6 +32,7 @@ public class RpcRequestMessageHandler extends SimpleChannelInboundHandler<RpcReq
         } catch (Exception e) {
             e.printStackTrace();
             String msg = e.getCause().getMessage();
+            // 二次包装异常，避免大量异常堆栈信息超出帧解码器长度限制
             response.setExceptionValue(new Exception("远程调用出错:" + msg));
         }
         ctx.writeAndFlush(response);
